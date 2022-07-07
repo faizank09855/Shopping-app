@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class GradientButton extends StatelessWidget {
   final List<Color> gradientColors ;
   final String text ;
-  const GradientButton({Key? key, this.gradientColors = const[Colors.blue , Colors.lightBlue], required this.text}) : super(key: key);
+  final Function onTap ;
+  final double textSize ;
+   const GradientButton({Key? key, this.gradientColors = const[Colors.blue , Colors.lightBlue], required this.text,required this.onTap, this.textSize = 18}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +21,9 @@ class GradientButton extends StatelessWidget {
         child: ElevatedButton(
             child:  Text(
               text,
-              style: TextStyle(color: Colors.white, fontSize: 18),
+              style: TextStyle(color: Colors.white, fontSize: textSize),
             ),
-            onPressed: () {},
+            onPressed: () {onTap();},
             style: ElevatedButton.styleFrom(
                 primary: Colors.transparent, elevation: 0)));
   }
@@ -55,13 +57,16 @@ class CircularCardWithPadding extends StatelessWidget {
 class ShadowTextFieldGrey extends StatelessWidget {
   final TextEditingController? controller;
   final String hint ;
-  const ShadowTextFieldGrey({Key? key,  this.controller,required this.hint}) : super(key: key);
+  final Widget? leading ;
+  const ShadowTextFieldGrey({Key? key,  this.controller,required this.hint, this.leading}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
+        contentPadding: EdgeInsets.all(2),
+        prefixIcon: leading,
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide.none),

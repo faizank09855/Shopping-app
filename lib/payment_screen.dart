@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:transparent/payment_widgets.dart';
 
+import 'home_screen.dart';
+
 class PaymentScreen extends StatelessWidget {
   const PaymentScreen({Key? key}) : super(key: key);
 
@@ -153,8 +155,12 @@ class PaymentScreen extends StatelessWidget {
               ],
             ),
           ),
-          const GradientButton(text: "Pay Now",
-            gradientColors: [Colors.deepOrange, Colors.deepOrangeAccent],)
+           GradientButton(text: "Pay Now",
+            gradientColors:const [Colors.deepOrange, Colors.deepOrangeAccent], onTap: (){
+            Navigator.push(context  , MaterialPageRoute(builder: (context)=> HomeScreen()));
+            },
+
+          )
         ],
       ),
     );

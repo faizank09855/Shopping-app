@@ -105,7 +105,6 @@ mainAxisAlignment: MainAxisAlignment.center,
                       _get(),
                       _get(),
                       _get(),
-
                     ],
                   )),
             ),
