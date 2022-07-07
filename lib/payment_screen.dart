@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:transparent/payment_widgets.dart';
 
 class PaymentScreen extends StatelessWidget {
   const PaymentScreen({Key? key}) : super(key: key);
@@ -8,20 +9,7 @@ class PaymentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        title: Text("Unpaid"),
-        actions: [
-          CloseButton(
-            color: Colors.black87,
-          )
-        ],
-        backgroundColor: Colors.white,
-        elevation: 0,
-        titleTextStyle: TextStyle(
-            color: Colors.black87, fontWeight: FontWeight.w700, fontSize: 22),
-      ),
+      appBar:PreferredSize(child:  PaymentScreenAppBar(), preferredSize: Size( double.infinity ,65 ,)) ,
       body: Column(
         children: [
           Padding(
@@ -45,7 +33,7 @@ class PaymentScreen extends StatelessWidget {
                               child: Image.network(
                                   "https://media.istockphoto.com/photos/colorful-vegetables-and-fruits-vegan-food-in-rainbow-colors-picture-id1284690585"),
                             )),
-                        SizedBox(width: 12),
+                        const SizedBox(width: 12),
                         Expanded(
                           flex: 4,
                           child: Column(
@@ -58,15 +46,15 @@ class PaymentScreen extends StatelessWidget {
                               ),
                               Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(vertical: 10.0),
+                                const EdgeInsets.symmetric(vertical: 10.0),
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
                                       padding: const EdgeInsets.all(10),
                                       decoration: BoxDecoration(
-                                          boxShadow: [
+                                          boxShadow: const [
                                             BoxShadow(
                                                 color: Colors.black54,
                                                 offset: Offset(1, 2),
@@ -74,7 +62,7 @@ class PaymentScreen extends StatelessWidget {
                                                 blurRadius: 1),
                                           ],
                                           borderRadius:
-                                              BorderRadius.circular(3),
+                                          BorderRadius.circular(3),
                                           gradient: const LinearGradient(
                                               colors: [
                                                 Colors.red,
@@ -83,7 +71,7 @@ class PaymentScreen extends StatelessWidget {
                                               begin: Alignment.topLeft,
                                               end: Alignment.bottomRight)),
                                     ),
-                                    Text(
+                                    const Text(
                                       "\$ 78.24",
                                       style: TextStyle(
                                           fontSize: 18,
@@ -95,126 +83,78 @@ class PaymentScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SizedBox(width: 12),
-                        Icon(Icons.info_outline_rounded)
+                        const SizedBox(width: 12),
+                        const Icon(Icons.info_outline_rounded)
                       ],
                     ),
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 16.0),
                       child: Text(
-                        "Use Promo Code",
+                        "Type Promo Code",
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
                             color: Colors.black45),
                       ),
                     ),
-                    TextField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide.none),
-                        fillColor: Colors.grey.shade200,
-                        hintText: "Type Promo Code",
-                        hintStyle: const TextStyle(
-                            color: Colors.black45,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500),
-                        filled: true,
-                      ),
-                    )
+                const ShadowTextFieldGrey(hint: "Type Promo Code",)
                   ],
                 ),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Card(
-              shape: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none),
-              elevation: 5,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 3,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                cardText("Boat Rockerz 350 Bluetooth Earphone"),
-                                cardText("Tax"),
-                                cardText("subtotal"),
-                                cardText("Promocode"),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                cardText("74.68"),
-                                cardText("1.25"),
-                                cardText("76.93"),
-                                cardText("-10.93"),
-                              ],
-                            ),
-                          )
-                        ],
+          CircularCardWithPadding(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            cardText("Boat Rockerz 350 Bluetooth Earphone"),
+                            cardText("Tax"),
+                            cardText("subtotal"),
+                            cardText("Promocode"),
+                          ],
+                        ),
                       ),
-                    ),
-                    Divider(
-                      thickness: 1,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text(
-                            "Total",
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 21,
-                              color: Colors.black87,
-                              height: 1.5,
-                            ),
-                          ),
-                          Text(
-                            "\$ 66.93",
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 21,
-                              color: Colors.black87,
-                              height: 1.5,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            cardText("74.68"),
+                            cardText("1.25"),
+                            cardText("76.93"),
+                            cardText("-10.93"),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
+                const Divider(
+                    thickness: 1
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _totalText("Total"),
+                      _totalText("\$ 66.93"),
+                    ],
+                  ),
+                )
+              ],
             ),
-          ) ,
-
-          Container(
-              height: MediaQuery.of(context).size.height * 0.075,
-              margin: const EdgeInsets.all(32),
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), gradient:RadialGradient(colors: [Colors.deepOrange , Colors.deepOrangeAccent] ,radius: 12 ) ),
-              width: double.infinity,
-              child: ElevatedButton(child: Text("Pay Now" , style: TextStyle(color: Colors.white , fontSize: 18),),onPressed: (){},style: ElevatedButton.styleFrom(primary: Colors.transparent , elevation: 0)))
+          ),
+          const GradientButton(text: "Pay Now",
+            gradientColors: [Colors.deepOrange, Colors.deepOrangeAccent],)
         ],
       ),
     );
@@ -230,6 +170,21 @@ class PaymentScreen extends StatelessWidget {
         fontSize: 13,
         color: Colors.grey.shade600,
         height: 2,
+      ),
+    );
+  }
+
+
+  _totalText(text) {
+    return Text(
+      text,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 21,
+        color: Colors.black87,
+        height: 1.5,
       ),
     );
   }
