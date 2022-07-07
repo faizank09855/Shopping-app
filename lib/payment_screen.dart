@@ -9,7 +9,7 @@ class PaymentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:PreferredSize(child:  PaymentScreenAppBar(), preferredSize: Size( double.infinity ,65 ,)) ,
+      appBar:const PreferredSize(child:  PaymentScreenAppBar(), preferredSize: Size( double.infinity ,65 ,)) ,
       body: Column(
         children: [
           Padding(
