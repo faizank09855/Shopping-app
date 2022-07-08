@@ -1,9 +1,12 @@
 import 'dart:ui';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent/payment_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
   runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
     home: MyApp(),
@@ -81,21 +84,19 @@ class _MyAppState extends State<MyApp> {
 
   _body() {
     return Column(
-
-mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-
           decoration: const BoxDecoration(
               image: DecorationImage(
-                fit: BoxFit.contain,
+                  fit: BoxFit.contain,
                   image: NetworkImage(
                       "https://media.istockphoto.com/photos/colorful-vegetables-and-fruits-vegan-food-in-rainbow-colors-picture-id1284690585"))),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0 ,
-              vertical: 12),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12),
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Column(

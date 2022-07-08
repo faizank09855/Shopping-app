@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'payment_widgets.dart';
+import 'product_description_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -24,20 +26,32 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.1,
-                child: ListView.builder(
-                  itemCount: productTypes.length,
-                  scrollDirection: Axis.horizontal,
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: EdgeInsets.all(5.0),
-                      child: CircleAvatar(
-                        radius: 32,
-                        backgroundImage: NetworkImage(productTypes[index]),
-                      ),
-                    );
-                  },
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height * 0.1,
+                child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection("products").snapshots() ,
+                  builder: (context,AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if(snapshot.connectionState == ConnectionState.waiting){
+                    return const CircularProgressIndicator();
+                  }
+                  return ListView.builder(
+                    itemCount: snapshot.data!.docs[0].data()["data"].length,
+                    scrollDirection: Axis.horizontal,
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                        padding: EdgeInsets.all(5.0),
+                        child: CircleAvatar(
+                          radius: 32,
+                          backgroundImage: NetworkImage(snapshot.data!.docs[0].data()["data"][index]["imgUrl"].toString()),
+                        ),
+                      );
+                    },
+                  );
+                  }
                 ),
               ),
               Container(
@@ -94,11 +108,9 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height : 16),
+              SizedBox(height: 16),
               productListView("Recommended For You"),
               freshList("Fresh Collection"),
-
-
             ],
           ),
         ),
@@ -106,149 +118,185 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  List<String> productTypes = [
-    "https://i.pinimg.com/originals/bd/ef/cb/bdefcbc72735f64db17f3250b1e64245.png",
-    "https://w7.pngwing.com/pngs/972/557/png-transparent-blue-dress-shirt-t-shirt-dress-shirt-dress-shirt-tshirt-blue-image-file-formats-thumbnail.png",
-    "https://cdn.imgbin.com/16/2/11/imgbin-jeans-denim-stock-photography-clothing-fly-a-stacked-pair-of-jeans-five-blue-denim-bottoms-CVybrb4QnV3B8kPmUrVScR3vY.jpg",
-    "https://e7.pngegg.com/pngimages/578/823/png-clipart-black-pullover-hoodie-hoodie-t-shirt-tracksuit-bluza-jacket-hoodie-sneakers-black-thumbnail.png",
-    "https://w7.pngwing.com/pngs/852/535/png-transparent-blazer-online-shopping-suit-black-clothing-blazer-fashion-black-formal-wear-thumbnail.png",
-    "http://atlas-content-cdn.pixelsquid.com/stock-images/men-s-blazer-sports-coat-o0L96vF-600.jpg",
-  ];
-
-
-
-  productListView(String text){
+  productListView(String text) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Text(text, style: TextStyle(color: Color(0xff3d3d3d) , fontWeight: FontWeight.w900, fontSize: 14 ),),
-      ),
-      SizedBox(
-        height: 250,
-        child: ListView.builder(
-          itemCount: productTypes.length,
-          scrollDirection: Axis.horizontal,
-
-          itemBuilder: (context, index) {
-            return Container(
-                height: 200,
-                width: 130,
-                margin: EdgeInsets.all(16),
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                        image: NetworkImage(productTypes[index]))),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                            padding: EdgeInsets.all(4),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: Center(
-                              child: Text(
-                                "New",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.grey.shade500),
-                              ),
-                            )),
-                        Container(
-                            padding: EdgeInsets.all(4),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: Center(
-                                child: Icon(
-                                  Icons.shopping_cart_outlined,
-                                  color: Colors.grey.shade500,
-                                ))),
-                      ],
-                    ),
-                  ],
-                ));
-          },
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Text(
+            text,
+            style: const TextStyle(
+                color: Color(0xff3d3d3d),
+                fontWeight: FontWeight.w900,
+                fontSize: 14),
+          ),
         ),
-      ),
-    ],);
+        SizedBox(
+          height: 250,
+          child: StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection("products").snapshots(),
+            builder: (context,AsyncSnapshot snapshot) {
+             if(snapshot.connectionState == ConnectionState.waiting){
+               return CircularProgressIndicator();
+             }
+             return ListView.builder(
+               itemCount: snapshot.data!.docs[0].data()["data"].length,
+               scrollDirection: Axis.horizontal,
+               itemBuilder: (context, index) {
+                 return GestureDetector(
+                   onTap: () {
+                     Navigator.push(context, MaterialPageRoute(builder:
+                         (context) =>ProductDescription(product: snapshot.data!.docs[0].data()["data"][index],)));
+                   },
+                   child: Container(
+                       height: 200,
+                       width: 130,
+                       margin: EdgeInsets.all(16),
+                       padding: EdgeInsets.all(8),
+                       decoration: BoxDecoration(
+                           color: Colors.grey.shade300,
+                           borderRadius: BorderRadius.circular(10),
+                           image: DecorationImage(
+                               image: NetworkImage(snapshot.data!.docs[0].data()["data"][index]["imgUrl"].toString()))),
+                       child: Column(
+                         mainAxisAlignment: MainAxisAlignment.start,
+                         children: [
+                           Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             crossAxisAlignment: CrossAxisAlignment.start,
+                             children: [
+                               Container(
+                                   padding: EdgeInsets.all(4),
+                                   decoration: BoxDecoration(
+                                     color: Colors.white,
+                                     borderRadius: BorderRadius.circular(5),
+                                   ),
+                                   child: Center(
+                                     child: Text(
+                                       "New",
+                                       style: TextStyle(
+                                           fontWeight: FontWeight.w700,
+                                           color: Colors.grey.shade500),
+                                     ),
+                                   )),
+                               Container(
+                                   padding: EdgeInsets.all(4),
+                                   decoration: BoxDecoration(
+                                     color: Colors.white,
+                                     borderRadius: BorderRadius.circular(5),
+                                   ),
+                                   child: Center(
+                                       child: Icon(
+                                         Icons.shopping_cart_outlined,
+                                         color: Colors.grey.shade500,
+                                       ))),
+                             ],
+                           ),
+                         ],
+                       )),
+                 );
+               },
+             );
+
+            }
+          ),
+        ),
+      ],
+    );
   }
 
-  freshList(text){
-    int len = productTypes.length;
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Text(text, style: TextStyle(color: Color(0xff3d3d3d) , fontWeight: FontWeight.w900, fontSize: 14 ),),
+  freshList(text) {
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Text(
+            text,
+            style: TextStyle(
+                color: Color(0xff3d3d3d),
+                fontWeight: FontWeight.w900,
+                fontSize: 14),
           ),
-          SizedBox(
-            height: 250,
-            child: ListView.builder(
-              itemCount: productTypes.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return Container(
-                    height: 200,
-                    width: 130,
-                    margin: const EdgeInsets.all(16),
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(10),
-                        image: DecorationImage(
-                            image: NetworkImage(productTypes[(len - 1) - index]))),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                                padding: EdgeInsets.all(4),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    "New",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.grey.shade500),
+        ),
+        SizedBox(
+          height: 250,
+          child: StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection("products").snapshots(),
+            builder: (context,AsyncSnapshot<QuerySnapshot> snapshot) {
+              if(snapshot.connectionState == ConnectionState.waiting){
+                return const CircularProgressIndicator();
+              }
+              return ListView.builder(
+                itemCount:  snapshot.data!.docs[0].data()["data"].length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder:
+                          (context) =>ProductDescription(product: snapshot.data!.docs[0].data()["data"][index],)));
+                    },
+                    child: Container(
+                      height: 200,
+                      width: 130,
+                      margin: const EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                              image: NetworkImage(
+                                  snapshot.data!.docs[0].data()["data"][index]["imgUrl"].toString()))),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                  padding: EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(5),
                                   ),
-                                )),
-                            Container(
+                                  child: Center(
+                                    child: Text(
+                                      "New",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.grey.shade500),
+                                    ),
+                                  )),
+                              Container(
                                 padding: const EdgeInsets.all(4),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                                 child: Center(
-                                    child: Icon(
-                                      Icons.shopping_cart_outlined,
-                                      color: Colors.grey.shade500,
-                                    ))),
-                          ],
-                        ),
-                      ],
-                    ));
-              },
-            ),
+                                  child: Icon(
+                                    Icons.shopping_cart_outlined,
+                                    color: Colors.grey.shade500,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+            }
           ),
-        ],);
-
+        ),
+      ],
+    );
   }
 }
