@@ -19,15 +19,22 @@ class ProductDescription extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                          offset: Offset(4, 4),
-                          blurRadius: 4,
+                          offset: Offset(3, 3),
+
+blurRadius: 4,
                           spreadRadius: 1,
-                          color: Colors.grey.shade300),
+                          color: Colors.grey.shade200),
+                      BoxShadow(
+                          offset: Offset(-3  , -3 ),
+blurRadius: 4,
+spreadRadius: 1,
+                          color: Colors.grey.shade100),
                       BoxShadow(
                           offset: Offset(-2, -2),
-                          blurRadius: 1,
-                          spreadRadius: 0.5,
-                          color: Colors.grey.shade300)
+
+
+                          color: Colors.white),
+
                     ]),
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
