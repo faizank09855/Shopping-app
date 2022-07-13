@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 
 class GradientButton extends StatelessWidget {
-  final List<Color> gradientColors ;
-  final String text ;
-  final Function onTap ;
-  final double textSize ;
-   const GradientButton({Key? key, this.gradientColors = const[Colors.blue , Colors.lightBlue], required this.text,required this.onTap, this.textSize = 18}) : super(key: key);
+  final List<Color> gradientColors;
+
+  final String text;
+
+  final Function onTap;
+
+  final double textSize;
+
+  const GradientButton(
+      {Key? key,
+      this.gradientColors = const [Colors.blue, Colors.lightBlue],
+      required this.text,
+      required this.onTap,
+      this.textSize = 18})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,30 +24,30 @@ class GradientButton extends StatelessWidget {
         margin: const EdgeInsets.all(32),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            gradient:  RadialGradient(
-                colors: gradientColors,
-                radius: 12)),
+            gradient: RadialGradient(colors: gradientColors, radius: 12)),
         width: double.infinity,
         child: ElevatedButton(
-            child:  Text(
+            child: Text(
               text,
               style: TextStyle(color: Colors.white, fontSize: textSize),
             ),
-            onPressed: () {onTap();},
+            onPressed: () {
+              onTap();
+            },
             style: ElevatedButton.styleFrom(
                 primary: Colors.transparent, elevation: 0)));
   }
 }
 
-
 class CircularCardWithPadding extends StatelessWidget {
+  final Widget child;
 
-  final Widget child ;
-  const CircularCardWithPadding({Key? key,required this.child}) : super(key: key);
+  const CircularCardWithPadding({Key? key, required this.child})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  Padding(
+    return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Card(
         shape: OutlineInputBorder(
@@ -53,19 +63,22 @@ class CircularCardWithPadding extends StatelessWidget {
   }
 }
 
-
 class ShadowTextFieldGrey extends StatelessWidget {
   final TextEditingController? controller;
-  final String hint ;
-  final Widget? leading ;
-  const ShadowTextFieldGrey({Key? key,  this.controller,required this.hint, this.leading}) : super(key: key);
+  final String hint;
+
+  final Widget? leading;
+
+  const ShadowTextFieldGrey(
+      {Key? key, this.controller, required this.hint, this.leading})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.all(2),
+        contentPadding: EdgeInsets.symmetric(vertical: 2 , horizontal: 8),
         prefixIcon: leading,
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
@@ -73,9 +86,7 @@ class ShadowTextFieldGrey extends StatelessWidget {
         fillColor: Colors.grey.shade200,
         hintText: hint,
         hintStyle: const TextStyle(
-            color: Colors.black45,
-            fontSize: 14,
-            fontWeight: FontWeight.w500),
+            color: Colors.black45, fontSize: 14, fontWeight: FontWeight.w500),
         filled: true,
       ),
     );
@@ -103,6 +114,3 @@ class PaymentScreenAppBar extends StatelessWidget {
     );
   }
 }
-
-
-

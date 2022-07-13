@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:transparent/utils/text_style.dart';
 
 class ProductDescription extends StatelessWidget {
-  final Map<String , dynamic> product;
+  final Map<String, dynamic> product;
 
-  const ProductDescription({Key? key,required this.product}) : super(key: key);
+  const ProductDescription({Key? key, required this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,26 +22,20 @@ class ProductDescription extends StatelessWidget {
                     boxShadow: [
                       BoxShadow(
                           offset: Offset(3, 3),
-
-blurRadius: 4,
+                          blurRadius: 4,
                           spreadRadius: 1,
                           color: Colors.grey.shade200),
                       BoxShadow(
-                          offset: Offset(-3  , -3 ),
-blurRadius: 4,
-spreadRadius: 1,
+                          offset: Offset(-3, -3),
+                          blurRadius: 4,
+                          spreadRadius: 1,
                           color: Colors.grey.shade100),
-                      BoxShadow(
-                          offset: Offset(-2, -2),
-
-
-                          color: Colors.white),
-
+                      BoxShadow(offset: Offset(-2, -2), color: Colors.white),
                     ]),
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.network(
-                      product["imgUrl"] ,
+                      product["imgUrl"],
                       fit: BoxFit.contain,
                     )),
               ),
@@ -254,8 +250,9 @@ spreadRadius: 1,
                           offset: const Offset(-2, -2)),
                     ]),
               ),
-              const Center(
-                child: Text("Shopping"),
+              Center(
+                child: CustomText("shopping", FontWeight.w500, 16,
+                    color: const Color(0xff3d3d3d)),
               ),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

@@ -55,6 +55,32 @@ class customClipper extends CustomClipper<Path> {
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) => true;
 }
 
+
+class CustomClip extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+    path.lineTo(0, 0);
+
+    // path.lineTo(50,  size.height);
+    var controllPoint = Offset(-4, size.height);
+    var endPoint = Offset(size.width + 4, size.height);
+    path.quadraticBezierTo(
+        controllPoint.dx, controllPoint.dy, endPoint.dx, endPoint.dy);
+    path.lineTo(size.width - 2, size.height);
+    var controllPoint2 = Offset(size.width + 6, -6);
+    var endPoint2 = const Offset(0, 0);
+    path.quadraticBezierTo(
+        controllPoint2.dx, controllPoint2.dy, endPoint2.dx, endPoint2.dy);
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => true;
+}
+
+
 class PaymentTile extends StatelessWidget {
 
   final Widget child ;

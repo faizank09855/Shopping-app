@@ -4,12 +4,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent/payment_screen.dart';
 
+import 'bottom_nav_bar.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
-  runApp(const MaterialApp(
+  runApp(MaterialApp(
+
     debugShowCheckedModeBanner: false,
-    home: MyApp(),
+    home: SpashScreen(),
   ));
 }
 
@@ -113,5 +116,30 @@ class _MyAppState extends State<MyApp> {
         ),
       ],
     );
+  }
+}
+
+class SpashScreen extends StatefulWidget {
+  SpashScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SpashScreen> createState() => _SpashScreenState();
+}
+
+class _SpashScreenState extends State<SpashScreen> {
+  @override
+  void initState() {
+    Future.delayed(
+        const Duration(seconds: 2),
+        () => Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const HomeScreenBottomNavigation())));
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold();
   }
 }

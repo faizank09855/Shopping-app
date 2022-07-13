@@ -2,23 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:transparent/home_screen.dart';
 
 import 'cart_module/cart_screen.dart';
+import 'history_module/history_screen.dart';
+import 'payment_screen.dart';
 
 class HomeScreenBottomNavigation extends StatefulWidget {
   const HomeScreenBottomNavigation({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreenBottomNavigation> createState() => _HomeScreenBottomNavigationState();
+  State<HomeScreenBottomNavigation> createState() =>
+      _HomeScreenBottomNavigationState();
 }
 
-class _HomeScreenBottomNavigationState extends State<HomeScreenBottomNavigation> {
+class _HomeScreenBottomNavigationState
+    extends State<HomeScreenBottomNavigation> {
+  int index = 0;
 
-  int index = 0 ;
   List list = [
-    HomeScreen() ,
-CartScreen() ,
-    HomeScreen() ,
-    HomeScreen() ,
+    HomeScreen(),
+    const CartScreen(),
+    const PaymentScreen() ,
+    const HistoryScreen(),
+
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,18 +34,25 @@ CartScreen() ,
         selectedItemColor: Colors.orangeAccent,
         unselectedItemColor: Colors.black87,
         type: BottomNavigationBarType.fixed,
-        onTap: (ind){
+        onTap: (ind) {
           setState(() {
             index = ind;
           });
         },
-        items: [
-        BottomNavigationBarItem(icon: Icon(Icons.home_outlined) , label: "Home" , activeIcon: Icon(Icons.home)),
-        BottomNavigationBarItem(icon: Icon(Icons.shopping_cart_outlined) , label: "cart"),
-        BottomNavigationBarItem(icon: Icon(Icons.favorite_border) , label: "Favorite", activeIcon: Icon(Icons.favorite)),
-        BottomNavigationBarItem(icon: Icon(Icons.home) , label: "Home"),
-      ],),
-
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home_outlined),
+              label: "Home",
+              activeIcon: Icon(Icons.home)),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart_outlined), label: "cart" , activeIcon: Icon(Icons.shopping_cart)),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.payments_outlined),
+              label: "Payment",
+              activeIcon: Icon(Icons.payments_sharp)),
+          BottomNavigationBarItem(icon: Icon(Icons.history), label: "History" ),
+        ],
+      ),
     );
   }
 }
