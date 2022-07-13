@@ -7,7 +7,7 @@ import 'utils/string_files.dart';
 import 'utils/text_style.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +25,10 @@ class HomeScreen extends StatelessWidget {
                   curve: Curves.easeIn,
                   decoration: const BoxDecoration(),
                   child: Image.network(StringFiles.demoImage)),
-
-              ListTile(leading: Icon(Icons.account_circle_outlined),title: CustomText("Profile" ,FontWeight.w500 ,16 ,  color: Color(0xff3d3d3d),),),
-              ListTile(leading: Icon(Icons.account_balance_wallet_outlined),title: CustomText("Wallet" ,FontWeight.w500 ,16 ,  color: Color(0xff3d3d3d),),),
-              ListTile(leading: Icon(Icons.admin_panel_settings_outlined),title: CustomText("Admin Panel" ,FontWeight.w500 ,16 ,  color: Color(0xff3d3d3d),),),
+              commonListTile(Icons.account_circle_outlined, "Profile"),
+              commonListTile(Icons.account_balance_wallet_outlined, "Wallet"),
+              commonListTile(
+                  Icons.admin_panel_settings_outlined, "Admin Panel"),
             ],
           ),
         ),
@@ -342,6 +342,18 @@ class HomeScreen extends StatelessWidget {
               }),
         ),
       ],
+    );
+  }
+
+  commonListTile(icon, String title) {
+    return ListTile(
+      leading: Icon(icon),
+      title: CustomText(
+        title,
+        FontWeight.w500,
+        16,
+        color: const Color(0xff3d3d3d),
+      ),
     );
   }
 }

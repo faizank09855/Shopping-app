@@ -18,7 +18,7 @@ class CartScreen extends StatelessWidget {
         foregroundColor: const Color(0xff3d3d3d),
       ),
       body: ListView.builder(
-        physics : BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         itemCount: 6,
         shrinkWrap: true,
         itemBuilder: (BuildContext context, int index) {
