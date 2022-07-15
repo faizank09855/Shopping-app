@@ -8,13 +8,16 @@ class GradientButton extends StatelessWidget {
   final Function onTap;
 
   final double textSize;
+  final double radius;
+  final bool isRadialGradient;
 
   const GradientButton(
       {Key? key,
       this.gradientColors = const [Colors.blue, Colors.lightBlue],
+        this.isRadialGradient = false ,
       required this.text,
       required this.onTap,
-      this.textSize = 18})
+      this.textSize = 18, this.radius = 10})
       : super(key: key);
 
   @override
@@ -23,10 +26,12 @@ class GradientButton extends StatelessWidget {
         height: MediaQuery.of(context).size.height * 0.075,
         margin: const EdgeInsets.all(32),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            gradient: RadialGradient(colors: gradientColors, radius: 12)),
+            borderRadius: BorderRadius.circular(radius),
+            gradient:isRadialGradient ? RadialGradient(colors: gradientColors, radius: 12) :
+            LinearGradient(colors: gradientColors,)
+        ),
         width: double.infinity,
-        child: ElevatedButton(
+        child: TextButton(
             child: Text(
               text,
               style: TextStyle(color: Colors.white, fontSize: textSize),
@@ -34,7 +39,7 @@ class GradientButton extends StatelessWidget {
             onPressed: () {
               onTap();
             },
-            style: ElevatedButton.styleFrom(
+            style: TextButton.styleFrom(
                 primary: Colors.transparent, elevation: 0)));
   }
 }
@@ -78,7 +83,7 @@ class ShadowTextFieldGrey extends StatelessWidget {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: 2 , horizontal: 8),
+        contentPadding: const EdgeInsets.symmetric(vertical: 2 , horizontal: 8),
         prefixIcon: leading,
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),

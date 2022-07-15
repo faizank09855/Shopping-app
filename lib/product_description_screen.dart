@@ -10,27 +10,29 @@ class ProductDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: _appBar(),
+        appBar: _appBar(context),
+        drawer: Drawer(),
         body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics:const BouncingScrollPhysics(),
           child: Column(
             children: [
               Container(
-                margin: EdgeInsets.all(24),
+                margin: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                          offset: Offset(3, 3),
+                          offset: const Offset(3, 3),
                           blurRadius: 4,
                           spreadRadius: 1,
                           color: Colors.grey.shade200),
                       BoxShadow(
-                          offset: Offset(-3, -3),
+                          offset: const Offset(-3, -3),
                           blurRadius: 4,
                           spreadRadius: 1,
                           color: Colors.grey.shade100),
-                      BoxShadow(offset: Offset(-2, -2), color: Colors.white),
+                      const BoxShadow(
+                          offset: Offset(-2, -2), color: Colors.white),
                     ]),
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
@@ -60,7 +62,7 @@ class ProductDescription extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.all(16),
                 child: Text(
-                    '''  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
+                    '''Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
                 '''),
               ),
               Padding(
@@ -78,8 +80,8 @@ class ProductDescription extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Container(
-                              margin: EdgeInsets.all(4),
-                              padding: EdgeInsets.all(12),
+                              margin: const EdgeInsets.all(4),
+                              padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
                                   color: Colors.indigo,
                                   shape: BoxShape.circle,
@@ -87,8 +89,8 @@ class ProductDescription extends StatelessWidget {
                                       width: 2, color: Colors.black)),
                             ),
                             Container(
-                              margin: EdgeInsets.all(4),
-                              padding: EdgeInsets.all(12),
+                              margin: const EdgeInsets.all(4),
+                              padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
                                   color: Colors.orangeAccent,
                                   shape: BoxShape.circle,
@@ -98,8 +100,8 @@ class ProductDescription extends StatelessWidget {
                                       : null),
                             ),
                             Container(
-                              margin: EdgeInsets.all(4),
-                              padding: EdgeInsets.all(12),
+                              margin: const EdgeInsets.all(4),
+                              padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
                                   color: Colors.grey,
                                   shape: BoxShape.circle,
@@ -195,7 +197,7 @@ class ProductDescription extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Container(
             height: 45,
-            margin: EdgeInsets.symmetric(horizontal: 24),
+            margin: const EdgeInsets.symmetric(horizontal: 24),
             decoration: BoxDecoration(
                 color: Colors.redAccent,
                 borderRadius: BorderRadius.circular(10)),
@@ -219,7 +221,7 @@ class ProductDescription extends StatelessWidget {
             )));
   }
 
-  _appBar() {
+  _appBar(BuildContext context) {
     return PreferredSize(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -230,9 +232,18 @@ class ProductDescription extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 padding: const EdgeInsets.all(8),
-                child: const Icon(
-                  Icons.menu,
-                  color: Colors.redAccent,
+                child: Builder(
+                  builder: (context) {
+                    return InkWell(
+                      onTap: (){
+                        Scaffold.of(context).openDrawer();
+                      },
+                      child: const Icon(
+                        Icons.menu,
+                        color: Colors.redAccent,
+                      ),
+                    );
+                  }
                 ),
                 decoration: BoxDecoration(
                     color: Colors.white,

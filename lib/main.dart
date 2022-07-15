@@ -2,15 +2,21 @@ import 'dart:ui';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:transparent/payment_screen.dart';
 
 import 'bottom_nav_bar.dart';
+import 'login_module/login_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: Colors.transparent,
+      systemNavigationBarIconBrightness: Brightness.dark));
   runApp(MaterialApp(
-
     debugShowCheckedModeBanner: false,
     home: SpashScreen(),
   ));
@@ -80,8 +86,8 @@ class _MyAppState extends State<MyApp> {
             child: Icon(Icons.share)),
         const SizedBox(
           width: 16,
-        )
-      ],
+        ),
+        ],
     );
   }
 
@@ -134,7 +140,7 @@ class _SpashScreenState extends State<SpashScreen> {
         () => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) => const HomeScreenBottomNavigation())));
+                builder: (context) =>  LoginScreen())));
     super.initState();
   }
 
