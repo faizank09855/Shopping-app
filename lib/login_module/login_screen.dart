@@ -160,11 +160,13 @@ class LoginScreen extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (context) => const HomeScreenBottomNavigation()));
-      } else {
+      }
+      else {
         Scaffold.of(context).showSnackBar(const SnackBar(
             backgroundColor: Colors.red, content: Text("No User Fount")));
       }
-    } else {
+    }
+    else {
       Scaffold.of(context).showSnackBar(const SnackBar(
           backgroundColor: Colors.red, content: Text("No User Fount")));
     }

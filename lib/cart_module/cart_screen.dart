@@ -1,12 +1,59 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent/utils/decoration.dart';
 import 'package:transparent/utils/string_files.dart';
 import 'package:transparent/utils/text_style.dart';
 import 'package:transparent/widgets/decorations.dart';
 
-class CartScreen extends StatelessWidget {
-  const CartScreen({Key? key}) : super(key: key);
+class CartScreen extends StatefulWidget {
+  CartScreen({Key? key}) : super(key: key);
 
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  List dataList = [];
+  List mainList = [];
+  var productCollections;
+  var productDocument;
+
+  var collection;
+
+  var document;
+
+  dataGet() async {
+    collection = FirebaseFirestore.instance.collection("users");
+    document = await collection.doc("fk09855@gmail.com").get();
+    if (document.exists) {
+      var data = document.data();
+      setState(() {
+        dataList.addAll(data["data"]["cart"]);
+      });
+    }
+
+
+   productCollections = FirebaseFirestore.instance
+        .collection("products");
+
+    productDocument =await productCollections.doc("6").get();
+
+    if (productDocument.exists) {
+      var data2 = productDocument.data();
+        data2["data"].forEach((ele){
+          if(dataList.contains(ele["id"])){
+            mainList.add(ele);
+          }
+setState(() {
+
+});
+      });
+    }
+  }
+@override
+  void initState() {
+  dataGet();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,10 +66,10 @@ class CartScreen extends StatelessWidget {
       ),
       body: ListView.builder(
         physics: const BouncingScrollPhysics(),
-        itemCount: 6,
+        itemCount: mainList.length,
         shrinkWrap: true,
         itemBuilder: (BuildContext context, int index) {
-          return CartTile();
+          return CartTile(isVisible: true, data:  mainList[index],);
         },
       ),
     );
@@ -32,7 +79,9 @@ class CartScreen extends StatelessWidget {
 class CartTile extends StatelessWidget {
   ValueNotifier<int> quantity = ValueNotifier<int>(1);
 
-  CartTile({Key? key}) : super(key: key);
+  final bool isVisible;
+  final Map data;
+  CartTile({Key? key,required this.isVisible,required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +105,7 @@ class CartTile extends StatelessWidget {
       width: MediaQuery.of(context).size.width * 0.2,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
-        child: Image.network(StringFiles.demoImage),
+        child: Image.network(data["imgUrl"]),
       ),
     );
   }
@@ -75,9 +124,9 @@ class CartTile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomText(StringFiles.springRoll, FontWeight.w600, 17),
+          CustomText(data["name"], FontWeight.w600, 17),
           const SizedBox(height: 4),
-          CustomText(StringFiles.commonPrice, FontWeight.w500, 14),
+          CustomText(data["price"], FontWeight.w500, 14),
           const SizedBox(height: 4),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,

@@ -8,10 +8,25 @@ import '../utils/text_style.dart';
 import 'widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
+  List list = [];
+
+  getCartList(context) async {
+    String email = "fk09855@gmail.com";
+    var collection = FirebaseFirestore.instance.collection('users');
+    var docSnapshot = await collection.doc(email).get();
+    if (docSnapshot.exists) {
+      Map<String, dynamic>? data = docSnapshot.data();
+      list.addAll(data?["data"]['cart']);
+    } else {
+      Scaffold.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Colors.red, content: Text("No User Fount")));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    getCartList(context);
     return SafeArea(
       child: Scaffold(
         drawerEnableOpenDragGesture: false,
@@ -41,101 +56,6 @@ class HomeScreen extends StatelessWidget {
           child: StreamBuilder(
               stream:
                   FirebaseFirestore.instance.collection("products").snapshots(),
-              builder: (context, AsyncSnapshot snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                }
-                return ListView.builder(
-                  itemCount: snapshot.data!.docs[0].data()["data"].length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ProductDescription(
-                                      product: snapshot.data!.docs[0]
-                                          .data()["data"][index],
-                                    )));
-                      },
-                      child: Container(
-                          height: 200,
-                          width: 130,
-                          margin: EdgeInsets.all(16),
-                          padding: EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                              color: Colors.grey.shade300,
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                  image: NetworkImage(snapshot.data!.docs[0]
-                                      .data()["data"][index]["imgUrl"]
-                                      .toString()))),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                      padding: EdgeInsets.all(4),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          "New",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w700,
-                                              color: Colors.grey.shade500),
-                                        ),
-                                      )),
-                                  Container(
-                                      padding: EdgeInsets.all(4),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      child: Center(
-                                          child: Icon(
-                                        Icons.shopping_cart_outlined,
-                                        color: Colors.grey.shade500,
-                                      ))),
-                                ],
-                              ),
-                            ],
-                          )),
-                    );
-                  },
-                );
-              }),
-        ),
-      ],
-    );
-  }
-
-  freshList(text) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Text(
-            text,
-            style: TextStyle(
-                color: Color(0xff3d3d3d),
-                fontWeight: FontWeight.w900,
-                fontSize: 14),
-          ),
-        ),
-        SizedBox(
-          height: 250,
-          child: StreamBuilder(
-              stream:
-                  FirebaseFirestore.instance.collection("products").snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
@@ -144,6 +64,8 @@ class HomeScreen extends StatelessWidget {
                   itemCount: snapshot.data!.docs[0].data()["data"].length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
+                    bool isAdded = list.contains(
+                        snapshot.data!.docs[0].data()["data"][index]["id"]);
                     return GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -194,10 +116,119 @@ class HomeScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(5),
                                   ),
                                   child: Center(
-                                    child: Icon(
-                                      Icons.shopping_cart_outlined,
-                                      color: Colors.grey.shade500,
+                                    child: isAdded
+                                        ? const Icon(
+                                            Icons.shopping_cart,
+                                            color: Colors.orangeAccent,
+                                          )
+                                        : Icon(
+                                            Icons.shopping_cart_outlined,
+                                            color: Colors.grey.shade500,
+                                          ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }),
+        ),
+      ],
+    );
+  }
+
+  freshList(text) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Text(
+            text,
+            style: const TextStyle(
+                color: Color(0xff3d3d3d),
+                fontWeight: FontWeight.w900,
+                fontSize: 14),
+          ),
+        ),
+        SizedBox(
+          height: 250,
+          child: StreamBuilder(
+              stream:
+                  FirebaseFirestore.instance.collection("products").snapshots(),
+              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                }
+                return ListView.builder(
+                  itemCount: snapshot.data!.docs[0].data()["data"].length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    bool isAdded = list.contains(
+                        snapshot.data!.docs[0].data()["data"][index]["id"]);
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProductDescription(
+                                      product: snapshot.data!.docs[0]
+                                          .data()["data"][index],
+                                    )));
+                      },
+                      child: Container(
+                        height: 200,
+                        width: 130,
+                        margin: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade300,
+                            borderRadius: BorderRadius.circular(10),
+                            image: DecorationImage(
+                                image: NetworkImage(snapshot.data!.docs[0]
+                                    .data()["data"][index]["imgUrl"]
+                                    .toString()))),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                    padding: EdgeInsets.all(4),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(5),
                                     ),
+                                    child: Center(
+                                      child: Text(
+                                        "New",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.grey.shade500),
+                                      ),
+                                    )),
+                                Container(
+                                  padding: const EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Center(
+                                    child: isAdded
+                                        ? const Icon(
+                                            Icons.shopping_cart,
+                                            color: Colors.orangeAccent,
+                                          )
+                                        : Icon(
+                                            Icons.shopping_cart_outlined,
+                                            color: Colors.grey.shade500,
+                                          ),
                                   ),
                                 ),
                               ],
@@ -226,9 +257,11 @@ class HomeScreen extends StatelessWidget {
               curve: Curves.easeIn,
               decoration: const BoxDecoration(),
               child: Image.network(StringFiles.demoImage)),
-          commonListTile(Icons.account_circle_outlined, "Profile" , context),
-          commonListTile(Icons.account_balance_wallet_outlined, "Wallet", context),
-          commonListTile(Icons.admin_panel_settings_outlined, "Admin Panel", context),
+          commonListTile(Icons.account_circle_outlined, "Profile", context),
+          commonListTile(
+              Icons.account_balance_wallet_outlined, "Wallet", context),
+          commonListTile(
+              Icons.admin_panel_settings_outlined, "Admin Panel", context),
         ],
       ),
     );
@@ -317,10 +350,9 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  commonListTile(icon, String title , context) {
+  commonListTile(icon, String title, context) {
     return ListTile(
-      onTap: (){
-          },
+      onTap: () {},
       leading: Icon(icon),
       title: CustomText(
         title,

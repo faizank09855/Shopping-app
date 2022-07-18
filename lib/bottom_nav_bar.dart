@@ -18,8 +18,8 @@ class _HomeScreenBottomNavigationState
   int index = 0;
 
   List list = [
-    const HomeScreen(),
-    const CartScreen(),
+     HomeScreen(),
+     CartScreen(),
     const PaymentScreen() ,
     const HistoryScreen(),
 
