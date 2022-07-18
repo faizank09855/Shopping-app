@@ -17,9 +17,7 @@ class _CartScreenState extends State<CartScreen> {
   List mainList = [];
   var productCollections;
   var productDocument;
-
   var collection;
-
   var document;
 
   dataGet() async {
@@ -53,28 +51,39 @@ setState(() {
 @override
   void initState() {
   dataGet();
+  super.initState();
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text("Cart"),
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        foregroundColor: const Color(0xff3d3d3d),
-      ),
-      body: ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        itemCount: mainList.length,
-        shrinkWrap: true,
-        itemBuilder: (BuildContext context, int index) {
-          return CartTile(isVisible: true, data:  mainList[index],);
-        },
-      ),
+      appBar: _appBar(),
+      body:_body(mainList)
     );
   }
+
 }
+_appBar(){
+  return AppBar(
+    centerTitle: true,
+    title: const Text("Cart"),
+    elevation: 0,
+    backgroundColor: Colors.transparent,
+    foregroundColor: const Color(0xff3d3d3d),
+  );
+}
+
+_body(mainList){
+  return  ListView.builder(
+    physics: const BouncingScrollPhysics(),
+    itemCount: mainList.length,
+    shrinkWrap: true,
+    itemBuilder: (BuildContext context, int index) {
+      return CartTile(isVisible: true, data:  mainList[index],);
+    },
+  );
+}
+
+
 
 class CartTile extends StatelessWidget {
   ValueNotifier<int> quantity = ValueNotifier<int>(1);
@@ -98,6 +107,9 @@ class CartTile extends StatelessWidget {
       ),
     );
   }
+
+
+
 
   tileImage(BuildContext context) {
     return Container(
