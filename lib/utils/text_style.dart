@@ -6,7 +6,7 @@ class CustomText extends StatelessWidget {
   final double size ;
   final Color color;
 
-    CustomText(this.text, this.weight , this.size , {this.color = const Color(0xff3d3d3d)});
+    const CustomText(this.text, this.weight , this.size , {this.color = const Color(0xff3d3d3d)});
 
   @override
   Widget build(BuildContext context) {

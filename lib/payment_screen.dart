@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:transparent/payment_widgets.dart';
 
-import 'bottom_nav_bar.dart';
+import 'utils/string_files.dart';
 
 class PaymentScreen extends StatelessWidget {
   const PaymentScreen({Key? key}) : super(key: key);
@@ -38,8 +38,7 @@ class PaymentScreen extends StatelessWidget {
                               flex: 3,
                               child: Padding(
                                 padding: const EdgeInsets.all(10.0),
-                                child: Image.network(
-                                    "https://media.istockphoto.com/photos/colorful-vegetables-and-fruits-vegan-food-in-rainbow-colors-picture-id1284690585"),
+                                child: Image.network(StringFiles.demoImage),
                               )),
                           const SizedBox(width: 12),
                           Expanded(
@@ -154,7 +153,7 @@ class PaymentScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        _totalText("Total"),
+                        _totalText(StringFiles.total),
                         _totalText("\$ 66.93"),
                       ],
                     ),
@@ -163,7 +162,7 @@ class PaymentScreen extends StatelessWidget {
               ),
             ),
             GradientButton(
-              text: "Pay Now",
+              text: StringFiles.payNow,
               gradientColors: const [
                 Colors.deepOrange,
                 Colors.deepOrangeAccent

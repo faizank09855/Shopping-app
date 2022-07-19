@@ -7,6 +7,7 @@ import 'package:transparent/payment_screen.dart';
 
 import 'bottom_nav_bar.dart';
 import 'login_module/login_screen.dart';
+import 'utils/string_files.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +19,7 @@ void main() {
       systemNavigationBarIconBrightness: Brightness.dark));
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: SpashScreen(),
+    home: SplashScreen(),
   ));
 }
 
@@ -51,8 +52,7 @@ class _MyAppState extends State<MyApp> {
             children: const [
               CircleAvatar(
                 radius: 12,
-                backgroundImage: NetworkImage(
-                    "https://media.istockphoto.com/photos/colorful-vegetables-and-fruits-vegan-food-in-rainbow-colors-picture-id1284690585"),
+                backgroundImage: NetworkImage(StringFiles.demoImage),
               ),
               Text(
                 "Faizan Khan",
@@ -87,7 +87,7 @@ class _MyAppState extends State<MyApp> {
         const SizedBox(
           width: 16,
         ),
-        ],
+      ],
     );
   }
 
@@ -99,8 +99,7 @@ class _MyAppState extends State<MyApp> {
           decoration: const BoxDecoration(
               image: DecorationImage(
                   fit: BoxFit.contain,
-                  image: NetworkImage(
-                      "https://media.istockphoto.com/photos/colorful-vegetables-and-fruits-vegan-food-in-rainbow-colors-picture-id1284690585"))),
+                  image: NetworkImage(StringFiles.demoImage))),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
             child: Padding(
@@ -125,22 +124,20 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-class SpashScreen extends StatefulWidget {
-  SpashScreen({Key? key}) : super(key: key);
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
-  State<SpashScreen> createState() => _SpashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SpashScreenState extends State<SpashScreen> {
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Future.delayed(
         const Duration(seconds: 2),
         () => Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>  LoginScreen())));
+            context, MaterialPageRoute(builder: (context) => LoginScreen())));
     super.initState();
   }
 

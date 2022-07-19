@@ -32,7 +32,7 @@ class RoundContainerButton extends StatelessWidget {
   final bool isBorder;
   final Function onTap;
 
-  RoundContainerButton(
+  const RoundContainerButton(
       {Key? key,
       required this.child,
       this.isBorder = false,

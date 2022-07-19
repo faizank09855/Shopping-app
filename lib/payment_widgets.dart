@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'utils/string_files.dart';
+
 class GradientButton extends StatelessWidget {
   final List<Color> gradientColors;
 
@@ -106,7 +108,7 @@ class PaymentScreenAppBar extends StatelessWidget {
     return AppBar(
       automaticallyImplyLeading: false,
       centerTitle: true,
-      title: const Text("Unpaid"),
+      title: const Text(StringFiles.unPaid),
       actions: const [
         CloseButton(
           color: Colors.black87,

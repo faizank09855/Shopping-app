@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent/utils/text_style.dart';
 
+import 'utils/string_files.dart';
+
 class ProductDescription extends StatelessWidget {
   final Map<String, dynamic> product;
 
@@ -13,7 +15,7 @@ class ProductDescription extends StatelessWidget {
         appBar: _appBar(context),
         drawer: Drawer(),
         body: SingleChildScrollView(
-          physics:const BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
               Container(
@@ -61,9 +63,7 @@ class ProductDescription extends StatelessWidget {
               ),
               const Padding(
                 padding: EdgeInsets.all(16),
-                child: Text(
-                    '''Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
-                '''),
+                child: Text(StringFiles.demoParagraph),
               ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -73,7 +73,7 @@ class ProductDescription extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text("Colors",
+                        const Text(StringFiles.colors,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 18)),
                         Row(
@@ -117,7 +117,7 @@ class ProductDescription extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text("Quantity",
+                        const Text(StringFiles.quantity,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 18)),
                         Row(
@@ -207,7 +207,7 @@ class ProductDescription extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
                   Text(
-                    "Proceed To Checkout",
+                    StringFiles.proceedToCheckout,
                     style: TextStyle(color: Colors.white),
                   ),
                   SizedBox(
@@ -232,19 +232,17 @@ class ProductDescription extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 padding: const EdgeInsets.all(8),
-                child: Builder(
-                  builder: (context) {
-                    return InkWell(
-                      onTap: (){
-                        Scaffold.of(context).openDrawer();
-                      },
-                      child: const Icon(
-                        Icons.menu,
-                        color: Colors.redAccent,
-                      ),
-                    );
-                  }
-                ),
+                child: Builder(builder: (context) {
+                  return InkWell(
+                    onTap: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                    child: const Icon(
+                      Icons.menu,
+                      color: Colors.redAccent,
+                    ),
+                  );
+                }),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(4),
@@ -261,9 +259,9 @@ class ProductDescription extends StatelessWidget {
                           offset: const Offset(-2, -2)),
                     ]),
               ),
-              Center(
-                child: CustomText("shopping", FontWeight.w500, 16,
-                    color: const Color(0xff3d3d3d)),
+              const Center(
+                child: CustomText(StringFiles.shopping, FontWeight.w500, 16,
+                    color: Color(0xff3d3d3d)),
               ),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
