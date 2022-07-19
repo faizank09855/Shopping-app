@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:transparent/utils/colors_file.dart';
+import 'package:transparent/utils/string_files.dart';
 import 'package:transparent/utils/text_style.dart';
 
 class HistoryScreen extends StatelessWidget {
@@ -10,14 +11,14 @@ class HistoryScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("History"),
+        title: const Text(StringFiles.history),
         elevation: 0,
         foregroundColor: ColorsUtils.textBlack,
         backgroundColor: Colors.transparent,
       ),
       body: Center(
         child: CustomText(
-          "No History Available",
+          StringFiles.noHistory,
           FontWeight.w600,
           20,
           color: const Color(0xff6d6d6d),

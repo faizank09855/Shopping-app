@@ -19,8 +19,8 @@ class HomeScreen extends StatelessWidget {
       Map<String, dynamic>? data = docSnapshot.data();
       list.addAll(data?["data"]['cart']);
     } else {
-      Scaffold.of(context).showSnackBar(const SnackBar(
-          backgroundColor: ColorsUtils.red, content: Text("No User Fount")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: ColorsUtils.red, content: Text(StringFiles.noUser)));
     }
   }
 
@@ -103,7 +103,7 @@ class HomeScreen extends StatelessWidget {
                                     ),
                                     child: Center(
                                       child: Text(
-                                        "New",
+                                        StringFiles.newString,
                                         style: TextStyle(
                                             fontWeight: FontWeight.w700,
                                             color: Colors.grey.shade500),

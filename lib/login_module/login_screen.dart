@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent/bottom_nav_bar.dart';
 import 'package:transparent/utils/colors_file.dart';
+import 'package:transparent/utils/string_files.dart';
 import 'package:transparent/utils/text_style.dart';
 
 import '../payment_widgets.dart';
@@ -70,33 +71,31 @@ class LoginScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomText(
-                    "Hello",
+                    StringFiles.hello,
                     FontWeight.bold,
                     72,
                     color: ColorsUtils.textBlack,
                   ),
                   CustomText(
-                    "Sign In To Your Account",
+                    StringFiles.signInToYourAccount,
                     FontWeight.w500,
                     18,
                     color: ColorsUtils.textBlackLight,
                   ),
                   LoginTextField(
-                    hint: "Enter Your Email ",
+                    hint: StringFiles.enterYourEmail,
                     controller: emailController,
                   ),
                   LoginTextField(
-                    hint: "Enter Your Password ",
+                    hint: StringFiles.enterYourPassword,
                     controller: passwordController,
                   ),
-                  SizedBox(
-                    height: 16,
-                  ),
+                  const SizedBox(height: 16),
                   Row(
                     children: [
-                      Spacer(),
+                      const Spacer(),
                       CustomText(
-                        "Forget Your Password?",
+                        StringFiles.forgetYourPassword,
                         FontWeight.w500,
                         14,
                         color: ColorsUtils.textBlackLight,
@@ -110,7 +109,7 @@ class LoginScreen extends StatelessWidget {
                     child: SizedBox(
                         width: MediaQuery.of(context).size.width / 1.5,
                         child: GradientButton(
-                          text: 'Sign In',
+                          text: StringFiles.signIn,
                           onTap: () {
                             checkAuth(context);
                           },
@@ -125,13 +124,13 @@ class LoginScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CustomText(
-                        "Don't have an Account? ",
+                        StringFiles.donNotHaveAccount,
                         FontWeight.w300,
                         14,
                         color: ColorsUtils.textBlackLight,
                       ),
                       CustomText(
-                        "Create",
+                        StringFiles.create,
                         FontWeight.w600,
                         14,
                         color: ColorsUtils.textBlack,
@@ -161,15 +160,21 @@ class LoginScreen extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (context) => const HomeScreenBottomNavigation()));
+      } else {
+        Scaffold.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: ColorsUtils.red,
+            content: Text(StringFiles.noUser),
+          ),
+        );
       }
-      else {
-        Scaffold.of(context).showSnackBar(const SnackBar(
-            backgroundColor: ColorsUtils.red, content: Text("No User Fount")));
-      }
-    }
-    else {
-      Scaffold.of(context).showSnackBar(const SnackBar(
-          backgroundColor: ColorsUtils.red, content: Text("No User Fount")));
+    } else {
+      Scaffold.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: ColorsUtils.red,
+          content: Text(StringFiles.noUser),
+        ),
+      );
     }
   }
 }
@@ -232,11 +237,11 @@ class thirdLayer extends CustomClipper<Path> {
     var start = Offset(size.width * 0.17, size.height);
     var end = Offset(size.width * 0.35, size.height - 42);
     path.quadraticBezierTo(start.dx, start.dy, end.dx, end.dy);
-    //
+
     var start2 = Offset(size.width * 0.6, size.height - 94);
     var end2 = Offset(size.width, size.height - 36);
     path.quadraticBezierTo(start2.dx, start2.dy, end2.dx, end2.dy);
-    //
+
     path.lineTo(size.width, size.height);
     path.lineTo(size.width, 0);
 
