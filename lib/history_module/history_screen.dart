@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:transparent/utils/colors_file.dart';
 import 'package:transparent/utils/text_style.dart';
 
 class HistoryScreen extends StatelessWidget {
@@ -11,7 +12,7 @@ class HistoryScreen extends StatelessWidget {
         centerTitle: true,
         title: const Text("History"),
         elevation: 0,
-        foregroundColor: const Color(0xff3d3d3d),
+        foregroundColor: ColorsUtils.textBlack,
         backgroundColor: Colors.transparent,
       ),
       body: Center(

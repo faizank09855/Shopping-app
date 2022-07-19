@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent/bottom_nav_bar.dart';
+import 'package:transparent/utils/colors_file.dart';
 import 'package:transparent/utils/text_style.dart';
 
 import '../payment_widgets.dart';
@@ -72,13 +73,13 @@ class LoginScreen extends StatelessWidget {
                     "Hello",
                     FontWeight.bold,
                     72,
-                    color: const Color(0xff3d3d3d),
+                    color: ColorsUtils.textBlack,
                   ),
                   CustomText(
                     "Sign In To Your Account",
                     FontWeight.w500,
                     18,
-                    color: const Color(0xff6d6d6d),
+                    color: ColorsUtils.textBlackLight,
                   ),
                   LoginTextField(
                     hint: "Enter Your Email ",
@@ -98,7 +99,7 @@ class LoginScreen extends StatelessWidget {
                         "Forget Your Password?",
                         FontWeight.w500,
                         14,
-                        color: Color(0xff6d6d6d),
+                        color: ColorsUtils.textBlackLight,
                       )
                     ],
                   ),
@@ -114,9 +115,9 @@ class LoginScreen extends StatelessWidget {
                             checkAuth(context);
                           },
                           radius: 32,
-                          gradientColors: [
-                            Colors.orange,
-                            Colors.pink,
+                          gradientColors: const [
+                            ColorsUtils.orangeAccent,
+                            ColorsUtils.pink,
                           ],
                         )),
                   ),
@@ -127,13 +128,13 @@ class LoginScreen extends StatelessWidget {
                         "Don't have an Account? ",
                         FontWeight.w300,
                         14,
-                        color: Color(0xff6d6d6d),
+                        color: ColorsUtils.textBlackLight,
                       ),
                       CustomText(
                         "Create",
                         FontWeight.w600,
                         14,
-                        color: Color(0xff3d3d3d),
+                        color: ColorsUtils.textBlack,
                       ),
                     ],
                   )
@@ -163,12 +164,12 @@ class LoginScreen extends StatelessWidget {
       }
       else {
         Scaffold.of(context).showSnackBar(const SnackBar(
-            backgroundColor: Colors.red, content: Text("No User Fount")));
+            backgroundColor: ColorsUtils.red, content: Text("No User Fount")));
       }
     }
     else {
       Scaffold.of(context).showSnackBar(const SnackBar(
-          backgroundColor: Colors.red, content: Text("No User Fount")));
+          backgroundColor: ColorsUtils.red, content: Text("No User Fount")));
     }
   }
 }

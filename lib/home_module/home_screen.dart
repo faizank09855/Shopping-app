@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:transparent/login_module/login_screen.dart';
+import 'package:transparent/utils/colors_file.dart';
 import '../payment_widgets.dart';
 import '../product_description_screen.dart';
 import '../utils/string_files.dart';
@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
       list.addAll(data?["data"]['cart']);
     } else {
       Scaffold.of(context).showSnackBar(const SnackBar(
-          backgroundColor: Colors.red, content: Text("No User Fount")));
+          backgroundColor: ColorsUtils.red, content: Text("No User Fount")));
     }
   }
 
@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
           child: Text(
             text,
             style: const TextStyle(
-                color: Color(0xff3d3d3d),
+                color: ColorsUtils.textBlack,
                 fontWeight: FontWeight.w900,
                 fontSize: 14),
           ),
@@ -119,7 +119,7 @@ class HomeScreen extends StatelessWidget {
                                     child: isAdded
                                         ? const Icon(
                                             Icons.shopping_cart,
-                                            color: Colors.orangeAccent,
+                                            color: ColorsUtils.orangeAccent,
                                           )
                                         : Icon(
                                             Icons.shopping_cart_outlined,
@@ -358,7 +358,7 @@ class HomeScreen extends StatelessWidget {
         title,
         FontWeight.w500,
         16,
-        color: const Color(0xff3d3d3d),
+        color: ColorsUtils.textBlack,
       ),
     );
   }

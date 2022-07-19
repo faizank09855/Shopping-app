@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:transparent/utils/colors_file.dart';
 import 'package:transparent/utils/decoration.dart';
-import 'package:transparent/utils/string_files.dart';
 import 'package:transparent/utils/text_style.dart';
 import 'package:transparent/widgets/decorations.dart';
 
@@ -68,7 +68,7 @@ _appBar(){
     title: const Text("Cart"),
     elevation: 0,
     backgroundColor: Colors.transparent,
-    foregroundColor: const Color(0xff3d3d3d),
+    foregroundColor: ColorsUtils.textBlack,
   );
 }
 
