@@ -140,7 +140,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 BlocProvider.of<LoginBloc>(context).add(
                                     LoginSubmit(
                                         email: emailController.text,
-                                        password: passwordController.text , context: context));
+                                        password: passwordController.text,
+                                        context: context));
                               },
                               radius: 32,
                               gradientColors: const [

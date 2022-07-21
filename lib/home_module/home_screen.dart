@@ -57,7 +57,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 250,
+          height: 210,
           child: StreamBuilder(
               stream:
                   FirebaseFirestore.instance.collection("products").snapshots(),
@@ -66,6 +66,7 @@ class HomeScreen extends StatelessWidget {
                   return const CircularProgressIndicator();
                 }
                 return ListView.builder(
+                  padding: EdgeInsets.only(left: 16),
                   itemCount: snapshot.data!.docs[0].data()["data"].length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
@@ -83,8 +84,8 @@ class HomeScreen extends StatelessWidget {
                       },
                       child: Container(
                         height: 200,
-                        width: 130,
-                        margin: const EdgeInsets.all(16),
+                        width: 110,
+                        margin: const EdgeInsets.only(top: 16 , bottom: 16 , right: 16),
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                             color: Colors.grey.shade300,
@@ -161,7 +162,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 250,
+          height: 210,
           child: StreamBuilder(
               stream:
                   FirebaseFirestore.instance.collection("products").snapshots(),
@@ -170,6 +171,7 @@ class HomeScreen extends StatelessWidget {
                   return const CircularProgressIndicator();
                 }
                 return ListView.builder(
+                  padding: const EdgeInsets.only(left: 16),
                   itemCount: snapshot.data!.docs[0].data()["data"].length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
@@ -178,17 +180,20 @@ class HomeScreen extends StatelessWidget {
                     return GestureDetector(
                       onTap: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ProductDescription(
-                                      product: snapshot.data!.docs[0]
-                                          .data()["data"][index],
-                                    )));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProductDescription(
+                              product: snapshot.data!.docs[0].data()["data"]
+                                  [index],
+                            ),
+                          ),
+                        );
                       },
                       child: Container(
                         height: 200,
-                        width: 130,
-                        margin: const EdgeInsets.all(16),
+                        width: 110,
+                        margin: const EdgeInsets.only(
+                            top: 16, bottom: 16, right: 16),
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                             color: Colors.grey.shade300,
@@ -283,11 +288,13 @@ class HomeScreen extends StatelessWidget {
             onTap: () async {
               SharedPreferences prefs = await SharedPreferences.getInstance();
               prefs.remove(SessionFiles.isLoggedIn);
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => BlocProvider(
-                    create: (context) => LoginBloc(),
-                    child: LoginScreen(),
-                  )));
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => BlocProvider(
+                            create: (context) => LoginBloc(),
+                            child: LoginScreen(),
+                          )));
             },
           ),
         ],

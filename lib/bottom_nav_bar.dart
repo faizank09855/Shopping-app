@@ -17,7 +17,7 @@ class HomeScreenBottomNavigation extends StatefulWidget {
 class _HomeScreenBottomNavigationState
     extends State<HomeScreenBottomNavigation> {
   int index = 0;
-  List list = [
+  List<Widget> list = [
     HomeScreen(),
     CartScreen(),
     const PaymentScreen(),
@@ -27,7 +27,9 @@ class _HomeScreenBottomNavigationState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: list[index],
+      body: IndexedStack(children: list,
+      index: index,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: index,
         selectedItemColor: Colors.orangeAccent,

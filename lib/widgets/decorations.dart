@@ -1,11 +1,8 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-
-class BlurWidget extends StatelessWidget {
+  class BlurWidget extends StatelessWidget {
   final Widget child;
   const BlurWidget({Key? key, required this.child}) : super(key: key , );
-
   @override
   Widget build(BuildContext context) {
     return ImageFiltered(
