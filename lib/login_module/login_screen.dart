@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transparent/bottom_nav_bar.dart';
 import 'package:transparent/utils/colors_file.dart';
@@ -8,6 +9,7 @@ import 'package:transparent/utils/string_files.dart';
 import 'package:transparent/utils/text_style.dart';
 
 import '../payment_widgets.dart';
+import 'bloc/login_bloc.dart';
 import 'widget/widgets.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -30,132 +32,147 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        reverse: true,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.35,
-              child: Stack(
-                children: [
-                  ClipPath(
-                    clipper: firstLayer(),
-                    child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.pinkAccent.withOpacity(0.2))),
-                  ),
-                  ClipPath(
-                    clipper: secondLayer(),
-                    child: Container(
-                        decoration:
-                            BoxDecoration(color: Colors.pink.withOpacity(0.3))),
-                  ),
-                  ClipPath(
-                    clipper: thirdLayer(),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                        colors: [
-                          Colors.orange.shade400,
-                          Colors.pinkAccent.shade100
-                        ],
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        stops: const [0, 0.4],
-                      )),
-                      child: const Center(
-                        child: Icon(
-                          Icons.verified_user,
-                          size: 54,
-                          color: Colors.white,
+      body: BlocConsumer<LoginBloc, LoginState>(
+        listener: (context, state) {
+          if (state is LoginLoaded) {
+            // Navigator.push(context, MaterialPageRoute(builder: ()))
+          }
+        },
+        builder: (context, state) {
+          if (state is LoginLoading) {
+            return Center(child: const CircularProgressIndicator());
+          }
+          return SingleChildScrollView(
+            reverse: true,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height * 0.35,
+                  child: Stack(
+                    children: [
+                      ClipPath(
+                        clipper: firstLayer(),
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.pinkAccent.withOpacity(0.2))),
+                      ),
+                      ClipPath(
+                        clipper: secondLayer(),
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.pink.withOpacity(0.3))),
+                      ),
+                      ClipPath(
+                        clipper: thirdLayer(),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                            colors: [
+                              Colors.orange.shade400,
+                              Colors.pinkAccent.shade100
+                            ],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                            stops: const [0, 0.4],
+                          )),
+                          child: const Center(
+                            child: Icon(
+                              Icons.verified_user,
+                              size: 54,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const CustomText(
-                    StringFiles.hello,
-                    FontWeight.bold,
-                    72,
-                    color: ColorsUtils.textBlack,
-                  ),
-                  const CustomText(
-                    StringFiles.signInToYourAccount,
-                    FontWeight.w500,
-                    18,
-                    color: ColorsUtils.textBlackLight,
-                  ),
-                  LoginTextField(
-                    hint: StringFiles.enterYourEmail,
-                    controller: emailController,
-                  ),
-                  LoginTextField(
-                    hint: StringFiles.enterYourPassword,
-                    controller: passwordController,
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: const [
-                      Spacer(),
-                      CustomText(
-                        StringFiles.forgetYourPassword,
-                        FontWeight.w500,
-                        14,
-                        color: ColorsUtils.textBlackLight,
-                      ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Center(
-                    child: SizedBox(
-                        width: MediaQuery.of(context).size.width / 1.5,
-                        child: GradientButton(
-                          text: StringFiles.signIn,
-                          onTap: () {
-                            checkAuth(context);
-                          },
-                          radius: 32,
-                          gradientColors: const [
-                            ColorsUtils.orangeAccent,
-                            ColorsUtils.pink,
-                          ],
-                        )),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      CustomText(
-                        StringFiles.donNotHaveAccount,
-                        FontWeight.w300,
-                        14,
-                        color: ColorsUtils.textBlackLight,
-                      ),
-                      CustomText(
-                        StringFiles.create,
-                        FontWeight.w600,
-                        14,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const CustomText(
+                        StringFiles.hello,
+                        FontWeight.bold,
+                        72,
                         color: ColorsUtils.textBlack,
                       ),
+                      const CustomText(
+                        StringFiles.signInToYourAccount,
+                        FontWeight.w500,
+                        18,
+                        color: ColorsUtils.textBlackLight,
+                      ),
+                      LoginTextField(
+                        hint: StringFiles.enterYourEmail,
+                        controller: emailController,
+                      ),
+                      LoginTextField(
+                        hint: StringFiles.enterYourPassword,
+                        controller: passwordController,
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: const [
+                          Spacer(),
+                          CustomText(
+                            StringFiles.forgetYourPassword,
+                            FontWeight.w500,
+                            14,
+                            color: ColorsUtils.textBlackLight,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Center(
+                        child: SizedBox(
+                            width: MediaQuery.of(context).size.width / 1.5,
+                            child: GradientButton(
+                              text: StringFiles.signIn,
+                              onTap: () {
+                                BlocProvider.of<LoginBloc>(context).add(
+                                    LoginSubmit(
+                                        email: emailController.text,
+                                        password: passwordController.text , context: context));
+                              },
+                              radius: 32,
+                              gradientColors: const [
+                                ColorsUtils.orangeAccent,
+                                ColorsUtils.pink,
+                              ],
+                            )),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          CustomText(
+                            StringFiles.donNotHaveAccount,
+                            FontWeight.w300,
+                            14,
+                            color: ColorsUtils.textBlackLight,
+                          ),
+                          CustomText(
+                            StringFiles.create,
+                            FontWeight.w600,
+                            14,
+                            color: ColorsUtils.textBlack,
+                          ),
+                        ],
+                      )
                     ],
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
+                  ),
+                )
+              ],
+            ),
+          );
+        },
       ),
     );
   }

@@ -3,10 +3,12 @@ import 'dart:ui';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transparent/payment_screen.dart';
 
 import 'bottom_nav_bar.dart';
+import 'login_module/bloc/login_bloc.dart';
 import 'login_module/login_screen.dart';
 import 'utils/session_file.dart';
 import 'utils/string_files.dart';
@@ -19,7 +21,7 @@ void main() {
       statusBarIconBrightness: Brightness.dark,
       systemNavigationBarColor: Colors.transparent,
       systemNavigationBarIconBrightness: Brightness.dark));
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
     home: SplashScreen(),
   ));
@@ -47,8 +49,9 @@ class _MyAppState extends State<MyApp> {
         color: Colors.black54,
         padding: EdgeInsets.all(8),
         child: InkWell(
-          onTap: () => Navigator.push(
-              context, MaterialPageRoute(builder: (co) => PaymentScreen())),
+          onTap: () =>
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (co) => PaymentScreen())),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
@@ -106,7 +109,7 @@ class _MyAppState extends State<MyApp> {
             filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
             child: Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12),
+              const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12),
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Column(
@@ -141,12 +144,17 @@ class _SplashScreenState extends State<SplashScreen> {
     getLoggedInStatus();
     Future.delayed(
         const Duration(seconds: 2),
-        () => Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => !isLoggedIn
-                    ? LoginScreen()
-                    : const HomeScreenBottomNavigation())));
+            () =>
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                    !isLoggedIn
+                        ? BlocProvider(
+                      create: (context) => LoginBloc(),
+                      child: LoginScreen(),
+                    )
+                        : const HomeScreenBottomNavigation())));
     super.initState();
   }
 

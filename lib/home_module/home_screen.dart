@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:transparent/login_module/bloc/login_bloc.dart';
 import 'package:transparent/login_module/login_screen.dart';
 import 'package:transparent/utils/colors_file.dart';
 import 'package:transparent/utils/session_file.dart';
@@ -261,20 +263,31 @@ class HomeScreen extends StatelessWidget {
               decoration: const BoxDecoration(),
               child: Image.network(StringFiles.demoImage)),
           CommonListTile(
-              icon: Icons.account_circle_outlined, title: StringFiles.profile),
+            icon: Icons.account_circle_outlined,
+            title: StringFiles.profile,
+            onTap: () {},
+          ),
           CommonListTile(
-              icon: Icons.account_balance_wallet_outlined,
-              title: StringFiles.wallet),
+            icon: Icons.account_balance_wallet_outlined,
+            title: StringFiles.wallet,
+            onTap: () {},
+          ),
           CommonListTile(
-              icon: Icons.admin_panel_settings_outlined,
-              title: StringFiles.adminPanel),
+            icon: Icons.admin_panel_settings_outlined,
+            title: StringFiles.adminPanel,
+            onTap: () {},
+          ),
           CommonListTile(
             icon: Icons.logout,
             title: StringFiles.logout,
             onTap: () async {
               SharedPreferences prefs = await SharedPreferences.getInstance();
               prefs.remove(SessionFiles.isLoggedIn);
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => BlocProvider(
+                    create: (context) => LoginBloc(),
+                    child: LoginScreen(),
+                  )));
             },
           ),
         ],
@@ -316,13 +329,13 @@ class HomeScreen extends StatelessWidget {
                   flex: 3,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: const [
                       CustomText("Sale", FontWeight.bold, 42,
                           color: Colors.white),
                       CustomText("Up to 40% off", FontWeight.w700, 14,
                           color: Colors.white),
-                      const SizedBox(height: 16),
-                      const ShopNowButton(),
+                      SizedBox(height: 16),
+                      ShopNowButton(),
                     ],
                   ),
                 ),
@@ -373,13 +386,15 @@ class CommonListTile extends StatelessWidget {
   Function? onTap;
 
   CommonListTile(
-      {Key? key, required this.title, required this.icon, this.onTap})
+      {Key? key, required this.title, required this.icon, required this.onTap})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap:(){onTap!();},
+      onTap: () {
+        onTap!();
+      },
       leading: Icon(icon),
       title: CustomText(
         title,

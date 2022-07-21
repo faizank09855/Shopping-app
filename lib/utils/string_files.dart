@@ -12,6 +12,7 @@ class StringFiles {
   static const String shopNow = "SHOP NOW";
   static const String newString = "New";
   static const String noUser = "No User Fount";
+  static const String wrongPassword = "Wrong Password";
   static const String signInToYourAccount = "Sign In To Your Account";
   static const String enterYourEmail = "Enter Your Email ";
   static const String enterYourPassword = "Enter Your Password ";
