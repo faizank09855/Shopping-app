@@ -29,4 +29,9 @@ class StringFiles {
   static const String quantity = "Quantity";
   static const String proceedToCheckout = "Proceed To Checkout";
   static const String shopping = "shopping";
+  static const String shoppingDrawer = "Shopping Drawer";
+  static const String profile = "Profile";
+  static const String wallet = "Wallet";
+  static const String adminPanel = "Admin Panel";
+  static const String logout = "Logout";
 }

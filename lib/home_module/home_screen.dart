@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:transparent/login_module/login_screen.dart';
 import 'package:transparent/utils/colors_file.dart';
+import 'package:transparent/utils/session_file.dart';
 import '../payment_widgets.dart';
 import '../product_description_screen.dart';
 import '../utils/string_files.dart';
@@ -247,7 +250,7 @@ class HomeScreen extends StatelessWidget {
 
   _drawer(context) {
     return Drawer(
-      semanticLabel: "Shopping Drawer",
+      semanticLabel: StringFiles.shoppingDrawer,
       elevation: 3,
       child: Column(
         children: [
@@ -257,11 +260,23 @@ class HomeScreen extends StatelessWidget {
               curve: Curves.easeIn,
               decoration: const BoxDecoration(),
               child: Image.network(StringFiles.demoImage)),
-          commonListTile(Icons.account_circle_outlined, "Profile", context),
-          commonListTile(
-              Icons.account_balance_wallet_outlined, "Wallet", context),
-          commonListTile(
-              Icons.admin_panel_settings_outlined, "Admin Panel", context),
+          CommonListTile(
+              icon: Icons.account_circle_outlined, title: StringFiles.profile),
+          CommonListTile(
+              icon: Icons.account_balance_wallet_outlined,
+              title: StringFiles.wallet),
+          CommonListTile(
+              icon: Icons.admin_panel_settings_outlined,
+              title: StringFiles.adminPanel),
+          CommonListTile(
+            icon: Icons.logout,
+            title: StringFiles.logout,
+            onTap: () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.remove(SessionFiles.isLoggedIn);
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+            },
+          ),
         ],
       ),
     );
@@ -349,10 +364,22 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+}
 
-  commonListTile(icon, String title, context) {
+class CommonListTile extends StatelessWidget {
+  final String title;
+  final IconData icon;
+
+  Function? onTap;
+
+  CommonListTile(
+      {Key? key, required this.title, required this.icon, this.onTap})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {},
+      onTap:(){onTap!();},
       leading: Icon(icon),
       title: CustomText(
         title,

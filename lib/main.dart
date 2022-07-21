@@ -3,10 +3,12 @@ import 'dart:ui';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transparent/payment_screen.dart';
 
 import 'bottom_nav_bar.dart';
 import 'login_module/login_screen.dart';
+import 'utils/session_file.dart';
 import 'utils/string_files.dart';
 
 void main() {
@@ -132,13 +134,25 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  bool isLoggedIn = false;
+
   @override
   void initState() {
+    getLoggedInStatus();
     Future.delayed(
         const Duration(seconds: 2),
         () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => LoginScreen())));
+            context,
+            MaterialPageRoute(
+                builder: (context) => !isLoggedIn
+                    ? LoginScreen()
+                    : const HomeScreenBottomNavigation())));
     super.initState();
+  }
+
+  Future<void> getLoggedInStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isLoggedIn = prefs.getBool(SessionFiles.isLoggedIn) ?? false;
   }
 
   @override

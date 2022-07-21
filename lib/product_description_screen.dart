@@ -13,6 +13,7 @@ class ProductDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: _appBar(context),
+
         drawer: Drawer(),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),

@@ -1,17 +1,31 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transparent/bottom_nav_bar.dart';
 import 'package:transparent/utils/colors_file.dart';
+import 'package:transparent/utils/session_file.dart';
 import 'package:transparent/utils/string_files.dart';
 import 'package:transparent/utils/text_style.dart';
 
 import '../payment_widgets.dart';
 import 'widget/widgets.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
+
   TextEditingController passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +64,7 @@ class LoginScreen extends StatelessWidget {
                         ],
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,
-                        stops: [0, 0.4],
+                        stops: const [0, 0.4],
                       )),
                       child: const Center(
                         child: Icon(
@@ -70,13 +84,13 @@ class LoginScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomText(
+                  const CustomText(
                     StringFiles.hello,
                     FontWeight.bold,
                     72,
                     color: ColorsUtils.textBlack,
                   ),
-                  CustomText(
+                  const CustomText(
                     StringFiles.signInToYourAccount,
                     FontWeight.w500,
                     18,
@@ -92,14 +106,14 @@ class LoginScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   Row(
-                    children: [
-                      const Spacer(),
+                    children: const [
+                      Spacer(),
                       CustomText(
                         StringFiles.forgetYourPassword,
                         FontWeight.w500,
                         14,
                         color: ColorsUtils.textBlackLight,
-                      )
+                      ),
                     ],
                   ),
                   const SizedBox(
@@ -122,7 +136,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: const [
                       CustomText(
                         StringFiles.donNotHaveAccount,
                         FontWeight.w300,
@@ -147,6 +161,7 @@ class LoginScreen extends StatelessWidget {
   }
 
   checkAuth(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     String email = emailController.text;
     String pass = passwordController.text;
     var collection = FirebaseFirestore.instance.collection('users');
@@ -156,12 +171,13 @@ class LoginScreen extends StatelessWidget {
       Map<String, dynamic>? data = docSnapshot.data();
       var password = data?["data"]['password'];
       if (pass == password) {
+        prefs.setBool(SessionFiles.isLoggedIn, true);
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
                 builder: (context) => const HomeScreenBottomNavigation()));
       } else {
-        Scaffold.of(context).showSnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             backgroundColor: ColorsUtils.red,
             content: Text(StringFiles.noUser),
