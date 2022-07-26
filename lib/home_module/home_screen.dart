@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent/utils/colors_file.dart';
 import 'package:transparent/utils/session_file.dart';
+import 'package:transparent/widgets/loading_builder.dart';
 
 import '../utils/string_files.dart';
 import '../utils/text_style.dart';
@@ -60,6 +61,7 @@ class HomeScreen extends StatelessWidget {
               data: snapshot.data!.docs[0].data()["data"],
               favoriteList: list,
             ),
+            loadingBuilder: LoadingBuilder().listLoading(),
           ),
         ),
       ],
@@ -89,7 +91,9 @@ class HomeScreen extends StatelessWidget {
                               ["imgUrl"]);
                     },
                   );
-                }),
+                } ,
+            loadingBuilder: LoadingBuilder().circleLoading(),
+            ),
           ),
           ContainerLinear(
             child: Row(

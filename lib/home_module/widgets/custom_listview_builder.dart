@@ -7,7 +7,10 @@ import 'widgets.dart';
 class CustomListViewBuilder extends StatelessWidget {
   final List data;
   final List favoriteList;
-  const CustomListViewBuilder({Key? key,required this.data, required this.favoriteList}) : super(key: key);
+
+  const CustomListViewBuilder(
+      {Key? key, required this.data, required this.favoriteList})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,19 +19,17 @@ class CustomListViewBuilder extends StatelessWidget {
       itemCount: data.length,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
-        bool isAdded = favoriteList.contains(
-            data[index]["id"]);
+        bool isAdded = favoriteList.contains(data[index]["id"]);
         return GestureDetector(
           onTap: () {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => ProductDescription(
-                        product: data[index])));
+                    builder: (context) =>
+                        ProductDescription(product: data[index])));
           },
           child: ItemCard(
-            imgUrl: data[index]
-            ["imgUrl"],
+            imgUrl: data[index]["imgUrl"],
             isAdded: isAdded,
           ),
         );
@@ -37,24 +38,28 @@ class CustomListViewBuilder extends StatelessWidget {
   }
 }
 
-
 class CustomStream extends StatelessWidget {
   final Function builder;
   final Stream stream;
-  const CustomStream({Key? key, required this.builder, required this.stream}) : super(key: key);
+  final Widget loadingBuilder;
+
+  const CustomStream(
+      {Key? key,
+      required this.builder,
+      required this.stream,
+      this.loadingBuilder = const Center(child: CircularProgressIndicator())})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream:
-        stream,
+        stream: stream,
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
+            return loadingBuilder;
           }
 
-return builder(snapshot);
+          return builder(snapshot);
         });
   }
 }
-

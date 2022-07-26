@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class NeuMorphicBox extends StatefulWidget {
-  final IconData icon;
-final Function onTap;
+  final Icon icon;
+  final Function onTap;
 
-  NeuMorphicBox({Key? key, required this.icon,required this.onTap}) : super(key: key);
+  NeuMorphicBox({Key? key, required this.icon, required this.onTap})
+      : super(key: key);
 
   @override
   State<NeuMorphicBox> createState() => _NeuMorphicBoxState();
@@ -27,16 +28,13 @@ class _NeuMorphicBoxState extends State<NeuMorphicBox> {
         });
       },
       child: GestureDetector(
-        onTap: (){
+        onTap: () {
           widget.onTap();
         },
         child: AnimatedContainer(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           padding: const EdgeInsets.all(8),
-          child: Icon(
-            widget.icon,
-            color: Colors.redAccent,
-          ),
+          child: widget.icon,
           decoration: isHold
               ? BoxDecoration(
                   color: Colors.white,

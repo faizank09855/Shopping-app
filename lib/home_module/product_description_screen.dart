@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:transparent/utils/colors_file.dart';
 import 'package:transparent/utils/nuemorphic_box.dart';
 import 'package:transparent/utils/text_style.dart';
 
@@ -124,31 +125,11 @@ class ProductDescription extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Container(
-                              margin: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 4),
-                              padding: const EdgeInsets.all(4),
-                              child: const Icon(
-                                Icons.remove,
-                                size: 20,
-                                color: Colors.black87,
-                              ),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(4),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.grey.shade300,
-                                        spreadRadius: 0.1,
-                                        blurRadius: 2,
-                                        offset: const Offset(2, 2)),
-                                    BoxShadow(
-                                        color: Colors.grey.shade300,
-                                        spreadRadius: 0.1,
-                                        blurRadius: 2,
-                                        offset: const Offset(-2, -2)),
-                                  ]),
-                            ),
+                            NeuMorphicBox(icon:const Icon(
+                              Icons.remove,
+                              size: 16,
+                              color: Colors.black87,
+                            ), onTap:(){}),
                             const Padding(
                               padding: EdgeInsets.symmetric(horizontal: 8.0),
                               child: Text("1",
@@ -157,31 +138,11 @@ class ProductDescription extends StatelessWidget {
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold)),
                             ),
-                            Container(
-                              margin: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 4),
-                              padding: const EdgeInsets.all(4),
-                              child: const Icon(
-                                Icons.add,
-                                size: 20,
-                                color: Colors.black87,
-                              ),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(4),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.grey.shade300,
-                                        spreadRadius: 0.1,
-                                        blurRadius: 2,
-                                        offset: const Offset(2, 2)),
-                                    BoxShadow(
-                                        color: Colors.grey.shade300,
-                                        spreadRadius: 0.1,
-                                        blurRadius: 2,
-                                        offset: const Offset(-2, -2)),
-                                  ]),
-                            ),
+                            NeuMorphicBox(icon:const Icon(
+                              Icons.add,
+                              size: 16,
+                              color: Colors.black87,
+                            ), onTap:(){}),
                           ],
                         )
                       ],
@@ -231,17 +192,23 @@ class ProductDescription extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               NeuMorphicBox(
-                icon: Icons.arrow_back,
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.redAccent,
+                ),
                 onTap: () {
                   Navigator.pop(context);
                 },
               ),
               const Center(
                 child: CustomText(StringFiles.shopping, FontWeight.w500, 16,
-                    color: Color(0xff3d3d3d)),
+                    color: ColorsUtils.textBlack),
               ),
               NeuMorphicBox(
-                icon: Icons.shopping_bag_outlined,
+                icon:  const Icon(
+                  Icons.shopping_bag_outlined,
+                  color: Colors.redAccent,
+                ),
                 onTap: () {},
               ),
             ],
