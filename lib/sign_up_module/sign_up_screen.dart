@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:transparent/home_module/bottom_nav_bar.dart';
 import 'package:transparent/utils/colors_file.dart';
+import 'package:transparent/utils/session_file.dart';
 import 'package:transparent/utils/string_files.dart';
 import 'package:transparent/utils/text_style.dart';
 
+import 'bloc/sign_up_bloc.dart';
 import 'widget/email_form.dart';
 import 'widget/name_form.dart';
 import 'widget/password_form.dart';
@@ -23,9 +28,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   late List<Widget> widgetList;
   late PageController controller;
-
+  SignUpBloc? bloc;
+late SharedPreferences prefs ;
+setPref()async{
+  prefs = await SharedPreferences.getInstance();
+}
   @override
   void initState() {
+    bloc = BlocProvider.of<SignUpBloc>(context);
+  setPref();
     controller = PageController(initialPage: 0);
     widgetList = [
       EmailForm(
@@ -38,9 +49,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
         lastNameController: lastNameController,
       ),
       PasswordForm(
-          controller: controller,
-          passwordController: passwordController,
-          rePasswordController: rePasswordController),
+        controller: controller,
+        passwordController: passwordController,
+        rePasswordController: rePasswordController,
+        onTap: () => bloc!.add(SignUpSubmitEvent(
+            email: emailController.text,
+            firstName: firstNameController.text,
+            lastName: lastNameController.text,
+            password: passwordController.text,
+            imgUrl: "imgUrl",
+            items: [])),
+      ),
     ];
     super.initState();
   }
@@ -48,94 +67,108 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-      reverse: true,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: double.infinity,
-            height: MediaQuery.of(context).size.height * 0.3,
-            child: Stack(
-              children: [
-                ClipPath(
-                  clipper: firstLayer(),
-                  child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.pinkAccent.withOpacity(0.2))),
-                ),
-                ClipPath(
-                  clipper: secondLayer(),
-                  child: Container(
-                      decoration:
-                          BoxDecoration(color: Colors.pink.withOpacity(0.3))),
-                ),
-                ClipPath(
-                  clipper: thirdLayer(),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                      colors: [
-                        Colors.orange.shade400,
-                        Colors.pinkAccent.shade100
-                      ],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      stops: const [0, 0.4],
-                    )),
-                    child: const Center(
-                      child: Icon(
-                        Icons.verified_user,
-                        size: 54,
-                        color: Colors.white,
+        body: BlocConsumer<SignUpBloc, SignUpState>(
+      listener: (context, state) {
+        if (state is SignUpLoaded) {
+          prefs.setBool(SessionFiles.isLoggedIn, true);
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const HomeScreenBottomNavigation()));
+        }
+        else if (state is SignUpError) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error),));
+        }
+      },
+      builder: (context, state) {
+        return SingleChildScrollView(
+          reverse: true,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.3,
+                child: Stack(
+                  children: [
+                    ClipPath(
+                      clipper: firstLayer(),
+                      child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.pinkAccent.withOpacity(0.2))),
+                    ),
+                    ClipPath(
+                      clipper: secondLayer(),
+                      child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.pink.withOpacity(0.3))),
+                    ),
+                    ClipPath(
+                      clipper: thirdLayer(),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                          colors: [
+                            Colors.orange.shade400,
+                            Colors.pinkAccent.shade100
+                          ],
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          stops: const [0, 0.4],
+                        )),
+                        child: const Center(
+                          child: Icon(
+                            Icons.verified_user,
+                            size: 54,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: CustomText(
+                        StringFiles.signUpToYourAccount,
+                        FontWeight.w500,
+                        18,
+                        color: ColorsUtils.textBlackLight,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 500,
+                      child: PageView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        controller: controller,
+                        itemCount: widgetList.length,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            children: [
+                              widgetList[index],
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                  ],
+                ),
+              )
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 0.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  child: CustomText(
-                    StringFiles.signUpToYourAccount,
-                    FontWeight.w500,
-                    18,
-                    color: ColorsUtils.textBlackLight,
-                  ),
-                ),
-                SizedBox(
-                  height: 500,
-                  child: PageView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    controller: controller,
-                    itemCount: widgetList.length,
-                    itemBuilder: (context, index) {
-
-                      return Column(
-                        children: [
-                          widgetList[index],
-                        ],
-                      );
-                    },
-                  ),
-                ),
-                const SizedBox(height: 16),
-              ],
-            ),
-          )
-        ],
-      ),
+        );
+      },
     ));
   }
-
 }
 
 class firstLayer extends CustomClipper<Path> {

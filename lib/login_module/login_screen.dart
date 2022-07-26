@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transparent/home_module/bottom_nav_bar.dart';
+import 'package:transparent/sign_up_module/bloc/sign_up_bloc.dart';
 import 'package:transparent/sign_up_module/sign_up_screen.dart';
 import 'package:transparent/utils/colors_file.dart';
 import 'package:transparent/utils/session_file.dart';
@@ -153,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children:  [
+                        children: [
                           const CustomText(
                             StringFiles.donNotHaveAccount,
                             FontWeight.w300,
@@ -161,8 +162,15 @@ class _LoginScreenState extends State<LoginScreen> {
                             color: ColorsUtils.textBlackLight,
                           ),
                           TextButton(
-                            onPressed: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen(),));
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => BlocProvider(
+                                      create: (context) => SignUpBloc(),
+                                      child: SignUpScreen(),
+                                    ),
+                                  ));
                             },
                             child: const CustomText(
                               StringFiles.create,
@@ -170,7 +178,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               14,
                               color: ColorsUtils.textBlack,
                             ),
-
                           ),
                         ],
                       )

@@ -10,7 +10,8 @@ class PasswordForm extends StatelessWidget {
   final TextEditingController passwordController;
   final TextEditingController rePasswordController;
   final PageController controller;
-  const PasswordForm({Key? key, required this.passwordController, required this.rePasswordController, required this.controller}) : super(key: key);
+  final Function onTap;
+  const PasswordForm({Key? key, required this.passwordController, required this.rePasswordController, required this.controller, required this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +37,7 @@ class PasswordForm extends StatelessWidget {
       GradientButton(
         text: StringFiles.signUp,
         onTap: () {
-          controller.nextPage(
-              duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+          onTap();
         },
         radius: 32,
         gradientColors: const [
