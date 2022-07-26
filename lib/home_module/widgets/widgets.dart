@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:transparent/utils/colors_file.dart';
 import 'package:transparent/utils/string_files.dart';
 
 class CircleAvatarListTile extends StatelessWidget {
@@ -58,6 +59,72 @@ class ShopNowButton extends StatelessWidget {
       ),
       decoration: BoxDecoration(
           color: Colors.black, borderRadius: BorderRadius.circular(10)),
+    );
+  }
+}
+
+class ItemCard extends StatelessWidget {
+  final String imgUrl;
+  final bool isAdded;
+
+  const ItemCard({Key? key, required this.imgUrl, required this.isAdded})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 200,
+      width: 110,
+      margin: const EdgeInsets.only(top: 16, bottom: 16, right: 16),
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+          color: Colors.grey.shade300,
+          borderRadius: BorderRadius.circular(10),
+          image: DecorationImage(
+              image: NetworkImage(imgUrl))),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                  padding: EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Center(
+                    child: Text(
+                      StringFiles.newString,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: Colors.grey.shade500),
+                    ),
+                  )),
+              Container(
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Center(
+                  child: isAdded
+                      ? const Icon(
+                          Icons.shopping_cart,
+                          color: ColorsUtils.orangeAccent,
+                        )
+                      : Icon(
+                          Icons.shopping_cart_outlined,
+                          color: Colors.grey.shade500,
+                        ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

@@ -31,39 +31,34 @@ class _CartScreenState extends State<CartScreen> {
       });
     }
 
+    productCollections = FirebaseFirestore.instance.collection("products");
 
-   productCollections = FirebaseFirestore.instance
-        .collection("products");
-
-    productDocument =await productCollections.doc("6").get();
+    productDocument = await productCollections.doc("6").get();
 
     if (productDocument.exists) {
       var data2 = productDocument.data();
-        data2["data"].forEach((ele){
-          if(dataList.contains(ele["id"])){
-            mainList.add(ele);
-          }
-setState(() {
-
-});
+      data2["data"].forEach((ele) {
+        if (dataList.contains(ele["id"])) {
+          mainList.add(ele);
+        }
+        setState(() {});
       });
     }
   }
-@override
-  void initState() {
-  dataGet();
-  super.initState();
-  }
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _appBar(),
-      body:_body(mainList)
-    );
+  void initState() {
+    dataGet();
+    super.initState();
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(appBar: _appBar(), body: _body(mainList));
+  }
 }
-_appBar(){
+
+_appBar() {
   return AppBar(
     centerTitle: true,
     title: const Text(StringFiles.cart),
@@ -73,25 +68,28 @@ _appBar(){
   );
 }
 
-_body(mainList){
-  return  ListView.builder(
+_body(mainList) {
+  return ListView.builder(
     physics: const BouncingScrollPhysics(),
     itemCount: mainList.length,
     shrinkWrap: true,
     itemBuilder: (BuildContext context, int index) {
-      return CartTile(isVisible: true, data:  mainList[index],);
+      return CartTile(
+        isVisible: true,
+        data: mainList[index],
+      );
     },
   );
 }
-
-
 
 class CartTile extends StatelessWidget {
   ValueNotifier<int> quantity = ValueNotifier<int>(1);
 
   final bool isVisible;
   final Map data;
-  CartTile({Key? key,required this.isVisible,required this.data}) : super(key: key);
+
+  CartTile({Key? key, required this.isVisible, required this.data})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -108,9 +106,6 @@ class CartTile extends StatelessWidget {
       ),
     );
   }
-
-
-
 
   tileImage(BuildContext context) {
     return Container(
