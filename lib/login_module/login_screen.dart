@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transparent/home_module/bottom_nav_bar.dart';
+import 'package:transparent/sign_up_module/sign_up_screen.dart';
 import 'package:transparent/utils/colors_file.dart';
 import 'package:transparent/utils/session_file.dart';
 import 'package:transparent/utils/string_files.dart';
@@ -152,18 +153,24 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          CustomText(
+                        children:  [
+                          const CustomText(
                             StringFiles.donNotHaveAccount,
                             FontWeight.w300,
                             14,
                             color: ColorsUtils.textBlackLight,
                           ),
-                          CustomText(
-                            StringFiles.create,
-                            FontWeight.w600,
-                            14,
-                            color: ColorsUtils.textBlack,
+                          TextButton(
+                            onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen(),));
+                            },
+                            child: const CustomText(
+                              StringFiles.create,
+                              FontWeight.w600,
+                              14,
+                              color: ColorsUtils.textBlack,
+                            ),
+
                           ),
                         ],
                       )

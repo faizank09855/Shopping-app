@@ -7,6 +7,8 @@ class StringFiles {
   static const String springRoll = "Spring Roll";
   static const String commonPrice = "Rs. 200.00";
   static const String cart = "Cart";
+  static const String next = "Next";
+  static const String back = "Back";
   static const String history = "History";
   static const String noHistory = "No History Available";
   static const String shopNow = "SHOP NOW";
@@ -14,10 +16,15 @@ class StringFiles {
   static const String noUser = "No User Fount";
   static const String wrongPassword = "Wrong Password";
   static const String signInToYourAccount = "Sign In To Your Account";
+  static const String signUpToYourAccount = "Sign Up To Your Account";
   static const String enterYourEmail = "Enter Your Email ";
   static const String enterYourPassword = "Enter Your Password ";
+  static const String firstName = "First Name ";
+  static const String lastName = "Last Name ";
+  static const String reEnterYourPassword = "Enter Your Password ";
   static const String forgetYourPassword = "Forget Your Password?";
   static const String signIn = 'Sign In';
+  static const String signUp = 'Sign Up';
   static const String hello = "Hello";
   static const String donNotHaveAccount = "Don't have an Account? ";
   static const String create = "Create";
