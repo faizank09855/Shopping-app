@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:transparent/utils/nuemorphic_box.dart';
 import 'package:transparent/utils/text_style.dart';
 
 import '../utils/string_files.dart';
@@ -13,8 +14,7 @@ class ProductDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: _appBar(context),
-
-        drawer: Drawer(),
+        drawer: const Drawer(),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
@@ -230,62 +230,19 @@ class ProductDescription extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                padding: const EdgeInsets.all(8),
-                child: Builder(builder: (context) {
-                  return InkWell(
-                    onTap: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                    child: const Icon(
-                      Icons.menu,
-                      color: Colors.redAccent,
-                    ),
-                  );
-                }),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(4),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.grey.shade300,
-                          spreadRadius: 0.1,
-                          blurRadius: 2,
-                          offset: const Offset(2, 2)),
-                      BoxShadow(
-                          color: Colors.grey.shade300,
-                          spreadRadius: 0.1,
-                          blurRadius: 2,
-                          offset: const Offset(-2, -2)),
-                    ]),
+              NeuMorphicBox(
+                icon: Icons.arrow_back,
+                onTap: () {
+                  Navigator.pop(context);
+                },
               ),
               const Center(
                 child: CustomText(StringFiles.shopping, FontWeight.w500, 16,
                     color: Color(0xff3d3d3d)),
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                padding: const EdgeInsets.all(8),
-                child: const Icon(
-                  Icons.shopping_bag_outlined,
-                  color: Colors.redAccent,
-                ),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(4),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.grey.shade300,
-                          spreadRadius: 0.1,
-                          blurRadius: 2,
-                          offset: const Offset(2, 2)),
-                      BoxShadow(
-                          color: Colors.grey.shade300,
-                          spreadRadius: 0.1,
-                          blurRadius: 2,
-                          offset: const Offset(-2, -2)),
-                    ]),
+              NeuMorphicBox(
+                icon: Icons.shopping_bag_outlined,
+                onTap: () {},
               ),
             ],
           ),
