@@ -9,7 +9,7 @@ import 'package:transparent/utils/colors_file.dart';
 import 'package:transparent/utils/session_file.dart';
 import 'package:transparent/utils/string_files.dart';
 
-import '../../bottom_nav_bar.dart';
+import '../../home_module/bottom_nav_bar.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';

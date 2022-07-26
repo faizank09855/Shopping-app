@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../../product_description_screen.dart';
+import '../product_description_screen.dart';
 import 'widgets.dart';
 
 class CustomListViewBuilder extends StatelessWidget {

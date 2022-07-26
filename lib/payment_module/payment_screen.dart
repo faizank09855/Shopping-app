@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:transparent/payment_widgets.dart';
+import 'package:transparent/payment_module/payment_widgets.dart';
 
-import 'utils/string_files.dart';
+import '../utils/string_files.dart';
 
 class PaymentScreen extends StatelessWidget {
   const PaymentScreen({Key? key}) : super(key: key);

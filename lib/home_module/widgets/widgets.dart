@@ -3,7 +3,7 @@ import 'package:transparent/utils/colors_file.dart';
 import 'package:transparent/utils/string_files.dart';
 import 'package:transparent/utils/text_style.dart';
 
-import '../../payment_widgets.dart';
+import '../../payment_module/payment_widgets.dart';
 
 class CircleAvatarListTile extends StatelessWidget {
   final String data;
@@ -24,6 +24,7 @@ class CircleAvatarListTile extends StatelessWidget {
 
 class ContainerLinear extends StatelessWidget {
   final Widget child;
+
   const ContainerLinear({Key? key, required this.child}) : super(key: key);
 
   @override

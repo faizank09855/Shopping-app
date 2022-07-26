@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:transparent/payment_screen.dart';
+import 'package:transparent/payment_module/payment_screen.dart';
 
-import 'bottom_nav_bar.dart';
+import 'home_module/bottom_nav_bar.dart';
 import 'login_module/bloc/login_bloc.dart';
 import 'login_module/login_screen.dart';
 import 'utils/session_file.dart';

@@ -2,13 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:transparent/bottom_nav_bar.dart';
+import 'package:transparent/home_module/bottom_nav_bar.dart';
 import 'package:transparent/utils/colors_file.dart';
 import 'package:transparent/utils/session_file.dart';
 import 'package:transparent/utils/string_files.dart';
 import 'package:transparent/utils/text_style.dart';
 
-import '../payment_widgets.dart';
+import '../payment_module/payment_widgets.dart';
 import 'bloc/login_bloc.dart';
 import 'widget/widgets.dart';
 

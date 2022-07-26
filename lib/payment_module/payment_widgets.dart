@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'utils/string_files.dart';
+import '../utils/string_files.dart';
 
 class GradientButton extends StatelessWidget {
   final List<Color> gradientColors;

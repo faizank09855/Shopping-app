@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent/utils/text_style.dart';
 
-import 'utils/string_files.dart';
+import '../utils/string_files.dart';
 
 class ProductDescription extends StatelessWidget {
   final Map<String, dynamic> product;
