@@ -77,7 +77,7 @@ class HomeScreen extends StatelessWidget {
             child: CustomText(text, FontWeight.w900, 14,
                 color: ColorsUtils.textBlack)),
         SizedBox(
-          height: 310 ,
+          height: 310,
           child: CustomStream(
             stream: _fireStore.collection("products").snapshots(),
             builder: (AsyncSnapshot snapshot) => GridView.builder(

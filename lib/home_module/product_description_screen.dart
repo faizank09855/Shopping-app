@@ -16,150 +16,7 @@ class ProductDescription extends StatelessWidget {
     return Scaffold(
         appBar: _appBar(context),
         drawer: const Drawer(),
-        body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.all(24),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                          offset: const Offset(3, 3),
-                          blurRadius: 4,
-                          spreadRadius: 1,
-                          color: Colors.grey.shade200),
-                      BoxShadow(
-                          offset: const Offset(-3, -3),
-                          blurRadius: 4,
-                          spreadRadius: 1,
-                          color: Colors.grey.shade100),
-                      const BoxShadow(
-                          offset: Offset(-2, -2), color: Colors.white),
-                    ]),
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Image.network(
-                      product["imgUrl"],
-                      fit: BoxFit.contain,
-                    )),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("${product["name"]}",
-                        style: const TextStyle(
-                            color: Color(0xff3d3d3d),
-                            fontSize: 24,
-                            fontWeight: FontWeight.w700)),
-                    Text("\$ ${product["price"]}",
-                        style: const TextStyle(
-                            color: Color(0xff3d3d3d),
-                            fontSize: 24,
-                            fontWeight: FontWeight.w700))
-                  ],
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(16),
-                child: Text(StringFiles.demoParagraph),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(StringFiles.colors,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18)),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.all(4),
-                              padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                  color: Colors.indigo,
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                      width: 2, color: Colors.black)),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.all(4),
-                              padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                  color: Colors.orangeAccent,
-                                  shape: BoxShape.circle,
-                                  border: false
-                                      ? Border.all(
-                                          width: 2, color: Colors.black)
-                                      : null),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.all(4),
-                              padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                  color: Colors.grey,
-                                  shape: BoxShape.circle,
-                                  border: false
-                                      ? Border.all(
-                                          width: 2, color: Colors.black)
-                                      : null),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(StringFiles.quantity,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18)),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            NeuMorphicBox(
-                                icon: const Icon(
-                                  Icons.remove,
-                                  size: 16,
-                                  color: Colors.black87,
-                                ),
-                                onTap: () {}),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Text("1",
-                                  style: TextStyle(
-                                      color: Color(0xff3d3d3d),
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold)),
-                            ),
-                            NeuMorphicBox(
-                                icon: const Icon(
-                                  Icons.add,
-                                  size: 16,
-                                  color: Colors.black87,
-                                ),
-                                onTap: () {}),
-                          ],
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.1,
-              )
-            ],
-          ),
-        ),
+        body: _body(context),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Container(
             height: 45,
@@ -187,8 +44,149 @@ class ProductDescription extends StatelessWidget {
             )));
   }
 
+  _body(BuildContext context) {
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Column(
+        children: [
+          _productImage(),
+          _productNameAndPrice(),
+          _productDescription(),
+          _productCustomize(),
+          _lowerPadding(context)
+        ],
+      ),
+    );
+  }
+
+  _lowerPadding(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.1,
+    );
+  }
+
+  _productCustomize() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _colorOptions(),
+          _quantityOptions(),
+        ],
+      ),
+    );
+  }
+
+  _colorOptions() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(StringFiles.colors,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              margin: const EdgeInsets.all(4),
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                  color: Colors.indigo,
+                  shape: BoxShape.circle,
+                  border: Border.all(width: 2, color: Colors.black)),
+            ),
+            Container(
+              margin: const EdgeInsets.all(4),
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                  color: Colors.orangeAccent,
+                  shape: BoxShape.circle,
+                  border:
+                      false ? Border.all(width: 2, color: Colors.black) : null),
+            ),
+            Container(
+              margin: const EdgeInsets.all(4),
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                  color: Colors.grey,
+                  shape: BoxShape.circle,
+                  border:
+                      false ? Border.all(width: 2, color: Colors.black) : null),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
+  _quantityOptions() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const CustomText(StringFiles.quantity, FontWeight.bold, 18),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            NeuMorphicBox(
+                child: const Icon(
+                  Icons.remove,
+                  size: 16,
+                  color: Colors.black87,
+                ),
+                onTap: () {}),
+            const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                child: CustomText("1", FontWeight.bold, 20,
+                    color: Color(0xff3d3d3d))),
+            NeuMorphicBox(
+                child: const Icon(
+                  Icons.add,
+                  size: 16,
+                  color: Colors.black87,
+                ),
+                onTap: () {})
+          ],
+        )
+      ],
+    );
+  }
+
+  _productDescription() {
+    return const Padding(
+      padding: EdgeInsets.all(16),
+      child: Text(StringFiles.demoParagraph),
+    );
+  }
+
+  _productNameAndPrice() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CustomText("${product["name"]}", FontWeight.w700, 24,
+              color: const Color(0xff3d3d3d)),
+          CustomText("\$ ${product["price"]}", FontWeight.w700, 24,
+              color: const Color(0xff3d3d3d))
+        ],
+      ),
+    );
+  }
+
+  _productImage() {
+    return NeuMorphicBox(
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Image.network(
+              product["imgUrl"],
+              fit: BoxFit.contain,
+            )),
+        onTap: () {});
+  }
+
   _appBar(BuildContext context) {
     return PreferredSize(
+      preferredSize: const Size(double.infinity, 64),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -196,7 +194,7 @@ class ProductDescription extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               NeuMorphicBox(
-                icon: const Icon(
+                child: const Icon(
                   Icons.arrow_back,
                   color: Colors.redAccent,
                 ),
@@ -209,7 +207,7 @@ class ProductDescription extends StatelessWidget {
                     color: ColorsUtils.textBlack),
               ),
               NeuMorphicBox(
-                icon: const Icon(
+                child: const Icon(
                   Icons.shopping_bag_outlined,
                   color: Colors.redAccent,
                 ),
@@ -219,7 +217,6 @@ class ProductDescription extends StatelessWidget {
           ),
         ],
       ),
-      preferredSize: const Size(double.infinity, 64),
     );
   }
 }

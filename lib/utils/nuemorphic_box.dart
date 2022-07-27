@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class NeuMorphicBox extends StatefulWidget {
-  final Icon icon;
+  final Widget child;
   final Function onTap;
 
-  NeuMorphicBox({Key? key, required this.icon, required this.onTap})
+  NeuMorphicBox({Key? key, required this.child, required this.onTap})
       : super(key: key);
 
   @override
@@ -34,7 +34,7 @@ class _NeuMorphicBoxState extends State<NeuMorphicBox> {
         child: AnimatedContainer(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           padding: const EdgeInsets.all(8),
-          child: widget.icon,
+          child: widget.child,
           decoration: isHold
               ? BoxDecoration(
                   color: Colors.white,
