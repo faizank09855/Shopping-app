@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:transparent/admin_panel/admin_panel_screen.dart';
 import 'package:transparent/login_module/bloc/login_bloc.dart';
 import 'package:transparent/login_module/login_screen.dart';
 import 'package:transparent/utils/colors_file.dart';
@@ -68,7 +69,9 @@ class HomeScreenDrawer extends StatelessWidget {
           CommonListTile(
             icon: Icons.admin_panel_settings_outlined,
             title: StringFiles.adminPanel,
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminPanelScreen()));
+            },
           ),
           CommonListTile(
             icon: Icons.logout,

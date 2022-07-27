@@ -29,14 +29,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
   late List<Widget> widgetList;
   late PageController controller;
   SignUpBloc? bloc;
-late SharedPreferences prefs ;
-setPref()async{
-  prefs = await SharedPreferences.getInstance();
-}
+  late SharedPreferences prefs;
+
+  setPref() async {
+    prefs = await SharedPreferences.getInstance();
+  }
+
   @override
   void initState() {
     bloc = BlocProvider.of<SignUpBloc>(context);
-  setPref();
+    setPref();
     controller = PageController(initialPage: 0);
     widgetList = [
       EmailForm(
@@ -75,9 +77,10 @@ setPref()async{
               context,
               MaterialPageRoute(
                   builder: (context) => const HomeScreenBottomNavigation()));
-        }
-        else if (state is SignUpError) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error),));
+        } else if (state is SignUpError) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(state.error),
+          ));
         }
       },
       builder: (context, state) {
@@ -89,7 +92,7 @@ setPref()async{
             children: [
               SizedBox(
                 width: double.infinity,
-                height: MediaQuery.of(context).size.height * 0.3,
+                height: MediaQuery.of(context).size.height * 0.34,
                 child: Stack(
                   children: [
                     ClipPath(

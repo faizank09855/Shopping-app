@@ -9,6 +9,8 @@ abstract class LoadingBuilderWidgets {
   Widget verticalCardLoading();
 
   Widget circleLoading();
+
+  Widget commonCircularLoading();
 }
 
 class LoadingBuilder extends LoadingBuilderWidgets {
@@ -60,5 +62,10 @@ class LoadingBuilder extends LoadingBuilderWidgets {
         );
       },
     );
+  }
+
+  @override
+  Widget commonCircularLoading() {
+    return const Center(child: CircularProgressIndicator());
   }
 }

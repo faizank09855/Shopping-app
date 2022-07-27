@@ -7,7 +7,7 @@ import 'package:transparent/utils/text_style.dart';
 import '../utils/string_files.dart';
 
 class ProductDescription extends StatelessWidget {
-  final Map<String, dynamic> product;
+  final product;
 
   const ProductDescription({Key? key, required this.product}) : super(key: key);
 
@@ -125,11 +125,13 @@ class ProductDescription extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            NeuMorphicBox(icon:const Icon(
-                              Icons.remove,
-                              size: 16,
-                              color: Colors.black87,
-                            ), onTap:(){}),
+                            NeuMorphicBox(
+                                icon: const Icon(
+                                  Icons.remove,
+                                  size: 16,
+                                  color: Colors.black87,
+                                ),
+                                onTap: () {}),
                             const Padding(
                               padding: EdgeInsets.symmetric(horizontal: 8.0),
                               child: Text("1",
@@ -138,11 +140,13 @@ class ProductDescription extends StatelessWidget {
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold)),
                             ),
-                            NeuMorphicBox(icon:const Icon(
-                              Icons.add,
-                              size: 16,
-                              color: Colors.black87,
-                            ), onTap:(){}),
+                            NeuMorphicBox(
+                                icon: const Icon(
+                                  Icons.add,
+                                  size: 16,
+                                  color: Colors.black87,
+                                ),
+                                onTap: () {}),
                           ],
                         )
                       ],
@@ -205,7 +209,7 @@ class ProductDescription extends StatelessWidget {
                     color: ColorsUtils.textBlack),
               ),
               NeuMorphicBox(
-                icon:  const Icon(
+                icon: const Icon(
                   Icons.shopping_bag_outlined,
                   color: Colors.redAccent,
                 ),

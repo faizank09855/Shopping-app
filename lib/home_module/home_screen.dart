@@ -58,8 +58,38 @@ class HomeScreen extends StatelessWidget {
           child: CustomStream(
             stream: _fireStore.collection("products").snapshots(),
             builder: (AsyncSnapshot snapshot) => CustomListViewBuilder(
-              data: snapshot.data!.docs[0].data()["data"],
+              data: snapshot.data!.docs,
               favoriteList: list,
+            ),
+            loadingBuilder: LoadingBuilder().listLoading(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  gridList(text) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: CustomText(text, FontWeight.w900, 14,
+                color: ColorsUtils.textBlack)),
+        SizedBox(
+          height: 310 ,
+          child: CustomStream(
+            stream: _fireStore.collection("products").snapshots(),
+            builder: (AsyncSnapshot snapshot) => GridView.builder(
+              itemCount: snapshot.data!.docs.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ItemCard(
+                  imgUrl: snapshot.data!.docs[index]["imgUrl"],
+                  isAdded: false,
+                );
+              },
+              gridDelegate:
+                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
             ),
             loadingBuilder: LoadingBuilder().listLoading(),
           ),
@@ -76,23 +106,22 @@ class HomeScreen extends StatelessWidget {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.1,
             child: CustomStream(
-                stream: _fireStore.collection("products").snapshots(),
-                builder: (snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  }
-                  return ListView.builder(
-                    itemCount: snapshot.data!.docs[0].data()["data"].length,
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    itemBuilder: (BuildContext context, int index) {
-                      return CircleAvatarListTile(
-                          data: snapshot.data!.docs[0].data()["data"][index]
-                              ["imgUrl"]);
-                    },
-                  );
-                } ,
-            loadingBuilder: LoadingBuilder().circleLoading(),
+              stream: _fireStore.collection("products").snapshots(),
+              builder: (snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                }
+                return ListView.builder(
+                  itemCount: snapshot.data!.docs.length,
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  itemBuilder: (BuildContext context, int index) {
+                    return CircleAvatarListTile(
+                        data: snapshot.data!.docs[index]["imgUrl"]);
+                  },
+                );
+              },
+              loadingBuilder: LoadingBuilder().circleLoading(),
             ),
           ),
           ContainerLinear(
@@ -118,7 +147,7 @@ class HomeScreen extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           horizontalList("Recommended For You"),
-          horizontalList("Fresh Collection"),
+          gridList("Fresh Collection"),
         ],
       ),
     );
