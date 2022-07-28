@@ -84,7 +84,6 @@ _body(mainList) {
 
 class CartTile extends StatelessWidget {
   ValueNotifier<int> quantity = ValueNotifier<int>(1);
-
   final bool isVisible;
   final Map data;
 

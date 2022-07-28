@@ -1,8 +1,6 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
+import 'package:transparent/admin_panel/repository/admin_panel_repository.dart';
 
 part 'admin_event.dart';
 
@@ -14,16 +12,9 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
       emit(AdminInitial());
       emit(AdminLoadingState());
       try {
-        CollectionReference collectionReference =
-            FirebaseFirestore.instance.collection("products");
-        var doc = await collectionReference.doc();
-        var a = doc.set({
-          "id": "",
-          "imgUrl": event.image,
-          "name": event.name,
-          "price": event.price,
-        });
-        print(a.toString());
+        AdminPanelRepository repository = AdminPanelRepositoryImpl();
+        var data = await repository.addItemRepository(
+            "", event.image, event.name, event.price);
         emit(AdminLoadedState());
       } catch (exception) {
         emit(AdminErrorState(error: exception.toString()));
