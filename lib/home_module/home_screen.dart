@@ -45,58 +45,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  horizontalList(text) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: CustomText(text, FontWeight.w900, 14,
-                color: ColorsUtils.textBlack)),
-        SizedBox(
-          height: 210,
-          child: CustomStream(
-            stream: _fireStore.collection("products").snapshots(),
-            builder: (AsyncSnapshot snapshot) => CustomListViewBuilder(
-              data: snapshot.data!.docs,
-              favoriteList: list,
-            ),
-            loadingBuilder: LoadingBuilder().listLoading(),
-          ),
-        ),
-      ],
-    );
-  }
 
-  gridList(text) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: CustomText(text, FontWeight.w900, 14,
-                color: ColorsUtils.textBlack)),
-        SizedBox(
-          height: 310,
-          child: CustomStream(
-            stream: _fireStore.collection("products").snapshots(),
-            builder: (AsyncSnapshot snapshot) => GridView.builder(
-              itemCount: snapshot.data!.docs.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ItemCard(
-                  imgUrl: snapshot.data!.docs[index]["imgUrl"],
-                  isAdded: false,
-                );
-              },
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-            ),
-            loadingBuilder: LoadingBuilder().listLoading(),
-          ),
-        ),
-      ],
-    );
-  }
 
   _body(BuildContext context) {
     return SingleChildScrollView(
@@ -150,6 +99,61 @@ class HomeScreen extends StatelessWidget {
           gridList("Fresh Collection"),
         ],
       ),
+    );
+  }
+
+
+  horizontalList(text) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: CustomText(text, FontWeight.w900, 14,
+                color: ColorsUtils.textBlack)),
+        SizedBox(
+          height: 210,
+          child: CustomStream(
+            stream: _fireStore.collection("products").snapshots(),
+            builder: (AsyncSnapshot snapshot) => CustomListViewBuilder(
+              data: snapshot.data!.docs,
+              favoriteList: list,
+            ),
+            loadingBuilder: LoadingBuilder().listLoading(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  gridList(text) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: CustomText(text, FontWeight.w900, 14,
+                color: ColorsUtils.textBlack)),
+        CustomStream(
+          stream: _fireStore.collection("products").snapshots(),
+          builder: (AsyncSnapshot snapshot) => GridView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ItemCard(
+                imgUrl: snapshot.data!.docs[index]["imgUrl"],
+                isAdded: false,
+              );
+            },
+            gridDelegate:
+            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+          ),
+          loadingBuilder: SizedBox(
+              height: 100,
+              child: LoadingBuilder().listLoading()),
+        ),
+      ],
     );
   }
 

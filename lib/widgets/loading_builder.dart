@@ -23,6 +23,7 @@ class LoadingBuilder extends LoadingBuilderWidgets {
   @override
   Widget listLoading() {
     return ListView.builder(
+
       padding: const EdgeInsets.only(left: 16),
       itemCount: 3,
       scrollDirection: Axis.horizontal,
