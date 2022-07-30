@@ -27,19 +27,16 @@ class _HomeScreenBottomNavigationState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(children: list,
-      index: index,
+      body: IndexedStack(
+        children: list,
+        index: index,
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: index,
         selectedItemColor: Colors.orangeAccent,
         unselectedItemColor: Colors.black87,
         type: BottomNavigationBarType.fixed,
-        onTap: (ind) {
-          setState(() {
-            index = ind;
-          });
-        },
+        onTap: _onTap ,
         items: const [
           BottomNavigationBarItem(
               icon: Icon(Icons.home_outlined),
@@ -58,5 +55,11 @@ class _HomeScreenBottomNavigationState
         ],
       ),
     );
+  }
+
+  _onTap(ind) {
+    setState(() {
+      index = ind;
+    });
   }
 }
