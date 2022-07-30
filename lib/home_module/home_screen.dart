@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:transparent/utils/colors_file.dart';
 import 'package:transparent/utils/session_file.dart';
 import 'package:transparent/widgets/loading_builder.dart';
-
 import '../utils/string_files.dart';
 import '../utils/text_style.dart';
 import 'widgets/custom_listview_builder.dart';

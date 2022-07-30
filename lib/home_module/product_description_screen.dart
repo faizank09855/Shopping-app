@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:transparent/utils/colors_file.dart';
 import 'package:transparent/utils/nuemorphic_box.dart';
 import 'package:transparent/utils/text_style.dart';
-
 import '../utils/string_files.dart';
 
 class ProductDescription extends StatelessWidget {
