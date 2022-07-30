@@ -6,6 +6,7 @@ import 'package:transparent/admin_panel/admin_panel_screen.dart';
 import 'package:transparent/login_module/bloc/login_bloc.dart';
 import 'package:transparent/login_module/login_screen.dart';
 import 'package:transparent/utils/colors_file.dart';
+import 'package:transparent/utils/navigator_class.dart';
 import 'package:transparent/utils/session_file.dart';
 import 'package:transparent/utils/string_files.dart';
 import 'package:transparent/utils/text_style.dart';
@@ -70,7 +71,7 @@ class HomeScreenDrawer extends StatelessWidget {
             icon: Icons.admin_panel_settings_outlined,
             title: StringFiles.adminPanel,
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminPanelScreen()));
+              NavigatorClass.adminPanelScreen(context);
             },
           ),
           CommonListTile(
@@ -79,13 +80,7 @@ class HomeScreenDrawer extends StatelessWidget {
             onTap: () async {
               SharedPreferences prefs = await SharedPreferences.getInstance();
               prefs.remove(SessionFiles.isLoggedIn);
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => BlocProvider(
-                            create: (context) => LoginBloc(),
-                            child: LoginScreen(),
-                          )));
+              NavigatorClass.homeScreenReplace(context, false);
             },
           ),
         ],

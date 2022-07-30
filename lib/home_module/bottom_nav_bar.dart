@@ -35,7 +35,7 @@ class _HomeScreenBottomNavigationState
         selectedItemColor: Colors.orangeAccent,
         unselectedItemColor: Colors.black87,
         type: BottomNavigationBarType.fixed,
-        onTap: _onTap ,
+        onTap: _onTap,
         items: const [
           BottomNavigationBarItem(
               icon: Icon(Icons.home_outlined),

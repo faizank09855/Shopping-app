@@ -83,12 +83,12 @@ _body(mainList) {
 }
 
 class CartTile extends StatelessWidget {
+  CartTile({Key? key, required this.isVisible, required this.data})
+      : super(key: key);
+
   ValueNotifier<int> quantity = ValueNotifier<int>(1);
   final bool isVisible;
   final Map data;
-
-  CartTile({Key? key, required this.isVisible, required this.data})
-      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -149,7 +149,7 @@ class CartTile extends StatelessWidget {
                   onTap: () {},
                   child: ValueListenableBuilder(
                     builder: (context, value, child) {
-                      return CustomText("${value}", FontWeight.w500, 11);
+                      return CustomText("$value", FontWeight.w500, 11);
                     },
                     valueListenable: quantity,
                   )),
@@ -172,7 +172,7 @@ class CartTile extends StatelessWidget {
         onTap: () {},
         child: Container(
           padding: const EdgeInsets.all(12),
-          color: Colors.red,
+          color: ColorsUtils.red,
           child: const Icon(
             Icons.delete,
             color: Colors.white,

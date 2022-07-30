@@ -6,6 +6,7 @@ import 'package:transparent/home_module/bottom_nav_bar.dart';
 import 'package:transparent/sign_up_module/bloc/sign_up_bloc.dart';
 import 'package:transparent/sign_up_module/sign_up_screen.dart';
 import 'package:transparent/utils/colors_file.dart';
+import 'package:transparent/utils/navigator_class.dart';
 import 'package:transparent/utils/session_file.dart';
 import 'package:transparent/utils/string_files.dart';
 import 'package:transparent/utils/text_style.dart';
@@ -36,9 +37,6 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: BlocConsumer<LoginBloc, LoginState>(
         listener: (context, state) {
-          if (state is LoginLoaded) {
-            // Navigator.push(context, MaterialPageRoute(builder: ()))
-          }
         },
         builder: (context, state) {
           if (state is LoginLoading) {
@@ -163,14 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           TextButton(
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => BlocProvider(
-                                      create: (context) => SignUpBloc(),
-                                      child: SignUpScreen(),
-                                    ),
-                                  ));
+                            NavigatorClass.signInScreen(context);
                             },
                             child: const CustomText(
                               StringFiles.create,
@@ -204,10 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
       var password = data?["data"]['password'];
       if (pass == password) {
         prefs.setBool(SessionFiles.isLoggedIn, true);
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const HomeScreenBottomNavigation()));
+      NavigatorClass.homeScreenReplace(context, true);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(

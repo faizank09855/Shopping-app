@@ -13,34 +13,37 @@ class ProductDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: _appBar(context),
-        drawer: const Drawer(),
-        body: _body(context),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: Container(
-            height: 45,
-            margin: const EdgeInsets.symmetric(horizontal: 24),
-            decoration: BoxDecoration(
-                color: Colors.redAccent,
-                borderRadius: BorderRadius.circular(10)),
-            width: double.infinity,
-            child: FlatButton(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text(
-                    StringFiles.proceedToCheckout,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Icon(Icons.arrow_forward, size: 20, color: Colors.white)
-                ],
+      appBar: _appBar(context),
+      drawer: const Drawer(),
+      body: _body(context),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Container(
+        height: 45,
+        margin: const EdgeInsets.symmetric(horizontal: 24),
+        decoration: BoxDecoration(
+          color: Colors.redAccent,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        width: double.infinity,
+        child: FlatButton(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text(
+                StringFiles.proceedToCheckout,
+                style: TextStyle(color: Colors.white),
               ),
-              onPressed: () {},
-              color: Colors.transparent,
-            )));
+              SizedBox(
+                width: 8,
+              ),
+              Icon(Icons.arrow_forward, size: 20, color: Colors.white)
+            ],
+          ),
+          onPressed: () {},
+          color: Colors.transparent,
+        ),
+      ),
+    );
   }
 
   _body(BuildContext context) {

@@ -10,6 +10,7 @@ import 'package:transparent/payment_module/payment_screen.dart';
 import 'home_module/bottom_nav_bar.dart';
 import 'login_module/bloc/login_bloc.dart';
 import 'login_module/login_screen.dart';
+import 'utils/navigator_class.dart';
 import 'utils/session_file.dart';
 import 'utils/string_files.dart';
 
@@ -49,9 +50,8 @@ class _MyAppState extends State<MyApp> {
         color: Colors.black54,
         padding: EdgeInsets.all(8),
         child: InkWell(
-          onTap: () =>
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (co) => PaymentScreen())),
+          onTap: () => Navigator.push(
+              context, MaterialPageRoute(builder: (co) => PaymentScreen())),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
@@ -109,7 +109,7 @@ class _MyAppState extends State<MyApp> {
             filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
             child: Padding(
               padding:
-              const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12),
+                  const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12),
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Column(
@@ -142,19 +142,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     getLoggedInStatus();
-    Future.delayed(
-        const Duration(seconds: 2),
-            () =>
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                    !isLoggedIn
-                        ? BlocProvider(
-                      create: (context) => LoginBloc(),
-                      child: LoginScreen(),
-                    )
-                        : const HomeScreenBottomNavigation())));
+    Future.delayed(const Duration(seconds: 2),
+        () => NavigatorClass.homeScreenReplace(context, isLoggedIn));
     super.initState();
   }
 

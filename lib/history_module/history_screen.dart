@@ -16,12 +16,12 @@ class HistoryScreen extends StatelessWidget {
         foregroundColor: ColorsUtils.textBlack,
         backgroundColor: Colors.transparent,
       ),
-      body: Center(
+      body: const Center(
         child: CustomText(
           StringFiles.noHistory,
           FontWeight.w600,
           20,
-          color: const Color(0xff6d6d6d),
+          color: ColorsUtils.textBlackLight,
         ),
       ),
     );

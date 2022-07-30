@@ -1,11 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:transparent/utils/colors_file.dart';
+import 'package:transparent/utils/navigator_class.dart';
 import 'package:transparent/widgets/loading_builder.dart';
-
-import 'admin_add_item_screen.dart';
-import 'bloc/admin_bloc.dart';
 
 class AdminPanelScreen extends StatelessWidget {
   const AdminPanelScreen({Key? key}) : super(key: key);
@@ -23,13 +20,7 @@ class AdminPanelScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => BlocProvider(
-                            create: (context) => AdminBloc(),
-                            child: AdminAddItemScreen(),
-                          )));
+              NavigatorClass.adminAddItemScreen(context);
             },
             icon: const Icon(Icons.add),
           )
@@ -49,7 +40,7 @@ class AdminPanelScreen extends StatelessWidget {
                 direction: DismissDirection.endToStart,
                 crossAxisEndOffset: 0.1,
                 background: Container(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   alignment: Alignment.centerRight,
                   color: Colors.red,
                   child: const Icon(
@@ -64,17 +55,16 @@ class AdminPanelScreen extends StatelessWidget {
                       leading: SizedBox(
                           width: MediaQuery.of(context).size.width * 0.2,
                           child: Image.network(
-                              "${snapshot.data!.docs[index]["imgUrl"].toString()}")),
-                      title:
-                          Text(snapshot.data!.docs[index]["name"].toString()),
-                      subtitle: Text(
-                          "\$${snapshot.data!.docs[index]["price"].toString()}"),
+                              "${snapshot.data!.docs[index]["imgUrl"]}")),
+                      title: Text("${snapshot.data!.docs[index]["name"]}"),
+                      subtitle:
+                          Text("\$${snapshot.data!.docs[index]["price"]}"),
                       trailing: const Icon(
                         Icons.delete,
                         color: ColorsUtils.red,
                       ),
                     ),
-                    Divider()
+                    const Divider()
                   ],
                 ),
               );

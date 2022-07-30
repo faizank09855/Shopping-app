@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:transparent/utils/navigator_class.dart';
 
 import '../product_description_screen.dart';
 import 'widgets.dart';
@@ -22,11 +23,7 @@ class CustomListViewBuilder extends StatelessWidget {
         bool isAdded = favoriteList.contains(data[index]["id"]);
         return GestureDetector(
           onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        ProductDescription(product: data[index])));
+            NavigatorClass.productDescription(context, data[index]);
           },
           child: ItemCard(
             imgUrl: data[index]["imgUrl"],

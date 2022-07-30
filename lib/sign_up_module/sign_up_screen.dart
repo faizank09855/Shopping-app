@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transparent/home_module/bottom_nav_bar.dart';
 import 'package:transparent/utils/colors_file.dart';
+import 'package:transparent/utils/navigator_class.dart';
 import 'package:transparent/utils/session_file.dart';
 import 'package:transparent/utils/string_files.dart';
 import 'package:transparent/utils/text_style.dart';
@@ -73,10 +74,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       listener: (context, state) {
         if (state is SignUpLoaded) {
           prefs.setBool(SessionFiles.isLoggedIn, true);
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const HomeScreenBottomNavigation()));
+         NavigatorClass.homeScreenReplace(context, true);
         } else if (state is SignUpError) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(state.error),
