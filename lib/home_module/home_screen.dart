@@ -52,7 +52,7 @@ class HomeScreen extends StatelessWidget {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.13,
             child: CustomStream(
-              stream: _fireStore.collection("products").snapshots(),
+              stream: _fireStore.collection("category").snapshots(),
               builder: (snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
@@ -63,8 +63,8 @@ class HomeScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   itemBuilder: (BuildContext context, int index) {
                     return CircleAvatarListTile(
-                      data: snapshot.data!.docs[index],
-                    );
+
+                        data: snapshot.data!.docs[index]["data"]);
                   },
                 );
               },

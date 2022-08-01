@@ -26,23 +26,25 @@ class _CartScreenState extends State<CartScreen> {
     document = await collection.doc("fk09855@gmail.com").get();
     if (document.exists) {
       var data = document.data();
-      setState(() {
-        dataList.addAll(data["data"]["cart"]);
-      });
+      if (data["data"]["cart"].isNotEmpty) {
+        setState(() {
+          dataList.addAll(data["data"]["cart"]);
+        });
+      }
     }
 
     productCollections = FirebaseFirestore.instance.collection("products");
-
     productDocument = await productCollections.doc("6").get();
-
     if (productDocument.exists) {
       var data2 = productDocument.data();
-      data2["data"].forEach((ele) {
-        if (dataList.contains(ele["id"])) {
-          mainList.add(ele);
-        }
-        setState(() {});
-      });
+      if (data2["data"] != null) {
+        data2["data"].forEach((ele) {
+          if (dataList.contains(ele["id"])) {
+            mainList.add(ele);
+          }
+          setState(() {});
+        });
+      }
     }
   }
 
