@@ -1,20 +1,18 @@
 import 'dart:ui';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transparent/payment_module/payment_screen.dart';
 
-import 'home_module/bottom_nav_bar.dart';
-import 'login_module/bloc/login_bloc.dart';
-import 'login_module/login_screen.dart';
+import 'notifiacation.dart';
 import 'utils/navigator_class.dart';
 import 'utils/session_file.dart';
 import 'utils/string_files.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -22,10 +20,20 @@ void main() {
       statusBarIconBrightness: Brightness.dark,
       systemNavigationBarColor: Colors.transparent,
       systemNavigationBarIconBrightness: Brightness.dark));
+  await PushNotificationService().setupInteractedMessage();
   runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
     home: SplashScreen(),
   ));
+
+  RemoteMessage? initialMessage =
+      await FirebaseMessaging.instance.getInitialMessage();
+  if (initialMessage != null) {
+    // App received a notification when it was killed
+  }
+
+  String? fcmToken = await FirebaseMessaging.instance.getToken();
+  print(fcmToken.toString());
 }
 
 class MyApp extends StatefulWidget {
@@ -47,28 +55,33 @@ class _MyAppState extends State<MyApp> {
 
   _get() {
     return Container(
-        color: Colors.black54,
-        padding: EdgeInsets.all(8),
-        child: InkWell(
-          onTap: () => Navigator.push(
-              context, MaterialPageRoute(builder: (co) => PaymentScreen())),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              CircleAvatar(
-                radius: 12,
-                backgroundImage: NetworkImage(StringFiles.demoImage),
-              ),
-              Text(
-                "Faizan Khan",
-                style: TextStyle(color: Colors.white),
-              ),
-              SizedBox(
-                width: 12,
-              ),
-            ],
+      color: Colors.black54,
+      padding: EdgeInsets.all(8),
+      child: InkWell(
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (co) => PaymentScreen(),
           ),
-        ));
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: const [
+            CircleAvatar(
+              radius: 12,
+              backgroundImage: NetworkImage(StringFiles.demoImage),
+            ),
+            Text(
+              "Faizan Khan",
+              style: TextStyle(color: Colors.white),
+            ),
+            SizedBox(
+              width: 12,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   _appBar() {

@@ -38,6 +38,8 @@ dependencies:
   cloud_firestore: ^1.0.0
   shared_preferences: ^2.0.15
   flutter_bloc: any
+  firebase_messaging: ^11.2.7
+  flutter_local_notifications: ^9.1.5
 
 dev_dependencies:
   flutter_test:
