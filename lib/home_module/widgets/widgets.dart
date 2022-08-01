@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:transparent/utils/colors_file.dart';
 import 'package:transparent/utils/colors_file.dart';
 import 'package:transparent/utils/string_files.dart';
 import 'package:transparent/utils/text_style.dart';
@@ -6,17 +8,27 @@ import 'package:transparent/utils/text_style.dart';
 import '../../payment_module/payment_widgets.dart';
 
 class CircleAvatarListTile extends StatelessWidget {
-  final String data;
+ final QueryDocumentSnapshot data ;
 
-  const CircleAvatarListTile({Key? key, required this.data}) : super(key: key);
+  const CircleAvatarListTile(
+      {Key? key,  required this.data})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(5.0),
-      child: CircleAvatar(
-        radius: 32,
-        backgroundImage: NetworkImage(data.toString()),
+      child: Column(
+        children: [
+          CircleAvatar(
+            radius: 32,
+            backgroundImage: NetworkImage(data["imgUrl"].toString()),
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+          CustomText(data["name"].toString(), FontWeight.w400, 14, color: ColorsUtils.textBlack),
+        ],
       ),
     );
   }
@@ -79,6 +91,70 @@ class ItemCard extends StatelessWidget {
       height: 200,
       width: 110,
       margin: const EdgeInsets.only(top: 16, bottom: 16, right: 16),
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+          color: Colors.grey.shade300,
+          borderRadius: BorderRadius.circular(10),
+          image: DecorationImage(image: NetworkImage(imgUrl))),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                  padding: EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Center(
+                    child: Text(
+                      StringFiles.newString,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: Colors.grey.shade500),
+                    ),
+                  )),
+              Container(
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Center(
+                  child: isAdded
+                      ? const Icon(
+                          Icons.shopping_cart,
+                          color: ColorsUtils.orangeAccent,
+                        )
+                      : Icon(
+                          Icons.shopping_cart_outlined,
+                          color: Colors.grey.shade500,
+                        ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class GridCard extends StatelessWidget {
+  final String imgUrl;
+  final bool isAdded;
+
+  const GridCard({Key? key, required this.imgUrl, required this.isAdded})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 200,
+      width: 110,
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
           color: Colors.grey.shade300,

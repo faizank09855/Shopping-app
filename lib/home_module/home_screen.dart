@@ -44,15 +44,13 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-
-
   _body(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.1,
+            height: MediaQuery.of(context).size.height * 0.13,
             child: CustomStream(
               stream: _fireStore.collection("products").snapshots(),
               builder: (snapshot) {
@@ -65,7 +63,8 @@ class HomeScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   itemBuilder: (BuildContext context, int index) {
                     return CircleAvatarListTile(
-                        data: snapshot.data!.docs[index]["imgUrl"]);
+                      data: snapshot.data!.docs[index],
+                    );
                   },
                 );
               },
@@ -94,21 +93,20 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          horizontalList("Recommended For You"),
-          gridList("Fresh Collection"),
+          horizontalList(),
+          gridList(),
         ],
       ),
     );
   }
 
-
-  horizontalList(text) {
+  horizontalList() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: CustomText(text, FontWeight.w900, 14,
+        const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            child: CustomText("Recommended For You", FontWeight.w900, 14,
                 color: ColorsUtils.textBlack)),
         SizedBox(
           height: 210,
@@ -125,32 +123,32 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  gridList(text) {
+  gridList() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: CustomText(text, FontWeight.w900, 14,
+        const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            child: CustomText("Fresh Collection", FontWeight.w900, 14,
                 color: ColorsUtils.textBlack)),
         CustomStream(
           stream: _fireStore.collection("products").snapshots(),
           builder: (AsyncSnapshot snapshot) => GridView.builder(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: snapshot.data!.docs.length,
+            padding: const EdgeInsets.all(16),
             itemBuilder: (BuildContext context, int index) {
-              return ItemCard(
+              return GridCard(
                 imgUrl: snapshot.data!.docs[index]["imgUrl"],
                 isAdded: false,
               );
             },
-            gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, crossAxisSpacing: 16, mainAxisSpacing: 16),
           ),
-          loadingBuilder: SizedBox(
-              height: 100,
-              child: LoadingBuilder().listLoading()),
+          loadingBuilder:
+              SizedBox(height: 100, child: LoadingBuilder().listLoading()),
         ),
       ],
     );
