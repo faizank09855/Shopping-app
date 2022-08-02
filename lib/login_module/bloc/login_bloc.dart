@@ -29,9 +29,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       if (docSnapshot.exists) {
         Map<String, dynamic>? data = docSnapshot.data();
-        var password = data?["data"]['password'];
+        var password = data?['password'];
         if (pass == password) {
           prefs.setBool(SessionFiles.isLoggedIn, true);
+          prefs.setString(StringFiles.email, email);
           NavigatorClass.homeScreenReplace(event.context, true);
         } else {
           ScaffoldMessenger.of(event.context).showSnackBar(

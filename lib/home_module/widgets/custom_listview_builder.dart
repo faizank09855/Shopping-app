@@ -26,7 +26,8 @@ class CustomListViewBuilder extends StatelessWidget {
             NavigatorClass.productDescription(context, data[index]);
           },
           child: ItemCard(
-            imgUrl: data[index]["imgUrl"],
+            imgUrl: data[index],
+            index : index ,
             isAdded: isAdded,
           ),
         );

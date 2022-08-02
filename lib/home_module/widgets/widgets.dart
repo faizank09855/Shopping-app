@@ -1,19 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transparent/utils/colors_file.dart';
 import 'package:transparent/utils/colors_file.dart';
 import 'package:transparent/utils/navigator_class.dart';
+import 'package:transparent/utils/session_file.dart';
 import 'package:transparent/utils/string_files.dart';
 import 'package:transparent/utils/text_style.dart';
 
 import '../../payment_module/payment_widgets.dart';
 
 class CircleAvatarListTile extends StatelessWidget {
- final QueryDocumentSnapshot data ;
+  final QueryDocumentSnapshot data;
 
-  const CircleAvatarListTile(
-      {Key? key,  required this.data})
-      : super(key: key);
+  const CircleAvatarListTile({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class CircleAvatarListTile extends StatelessWidget {
       child: Column(
         children: [
           InkWell(
-            onTap: (){
+            onTap: () {
               NavigatorClass.categoryScreen(context, data["name"]);
             },
             child: CircleAvatar(
@@ -33,7 +33,8 @@ class CircleAvatarListTile extends StatelessWidget {
           const SizedBox(
             height: 4,
           ),
-          CustomText(data["name"].toString(), FontWeight.w400, 14, color: ColorsUtils.textBlack),
+          CustomText(data["name"].toString(), FontWeight.w400, 14,
+              color: ColorsUtils.textBlack),
         ],
       ),
     );
@@ -85,10 +86,15 @@ class ShopNowButton extends StatelessWidget {
 }
 
 class ItemCard extends StatelessWidget {
-  final String imgUrl;
+  final QueryDocumentSnapshot imgUrl;
   final bool isAdded;
+  final int index;
 
-  const ItemCard({Key? key, required this.imgUrl, required this.isAdded})
+  const ItemCard(
+      {Key? key,
+      required this.imgUrl,
+      required this.isAdded,
+      required this.index})
       : super(key: key);
 
   @override
@@ -101,7 +107,7 @@ class ItemCard extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.grey.shade300,
           borderRadius: BorderRadius.circular(10),
-          image: DecorationImage(image: NetworkImage(imgUrl))),
+          image: DecorationImage(image: NetworkImage(imgUrl["imgUrl"]))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -110,7 +116,7 @@ class ItemCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                  padding: EdgeInsets.all(4),
+                  padding: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(5),
@@ -129,21 +135,89 @@ class ItemCard extends StatelessWidget {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(5),
                 ),
-                child: Center(
-                  child: isAdded
-                      ? const Icon(
-                          Icons.shopping_cart,
-                          color: ColorsUtils.orangeAccent,
-                        )
-                      : Icon(
-                          Icons.shopping_cart_outlined,
-                          color: Colors.grey.shade500,
-                        ),
-                ),
+                child: CartIconButton(isAdded: isAdded, index: index),
               ),
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class CartIconButton extends StatefulWidget {
+  final bool isAdded;
+  final int index;
+
+  const CartIconButton({Key? key, required this.isAdded, required this.index})
+      : super(key: key);
+
+  @override
+  State<CartIconButton> createState() => _CartIconButtonState();
+}
+
+class _CartIconButtonState extends State<CartIconButton> {
+  late bool isAdded;
+  String? username;
+  String? productId;
+
+  @override
+  void initState() {
+    getNamePref();
+    isAdded = widget.isAdded;
+    getId();
+    super.initState();
+  }
+
+  getId() async {
+    var a = FirebaseFirestore.instance.collection("products");
+    var b = await a.get();
+    var map = b.docs[widget.index];
+    // username = b[widget.index]
+    productId = map["id"];
+  }
+
+  getNamePref() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    username = prefs.getString(StringFiles.email);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        if (isAdded) {
+          setState(() {
+            isAdded = false;
+          });
+          await FirebaseFirestore.instance
+              .collection("users")
+              .doc(username)
+              .update({
+            "cart": FieldValue.arrayRemove([productId]),
+          });
+        } else {
+          setState(() {
+            isAdded = true;
+          });
+          await FirebaseFirestore.instance
+              .collection("users")
+              .doc(username)
+              .update({
+            "cart": FieldValue.arrayUnion([productId]),
+          });
+        }
+      },
+      child: Center(
+        child: isAdded
+            ? const Icon(
+                Icons.shopping_cart,
+                color: ColorsUtils.orangeAccent,
+              )
+            : Icon(
+                Icons.shopping_cart_outlined,
+                color: Colors.grey.shade500,
+              ),
       ),
     );
   }

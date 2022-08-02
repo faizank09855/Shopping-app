@@ -42,19 +42,24 @@ class _CategoryScreenState extends State<CategoryScreen> {
               .where("category", isEqualTo: widget.title)
               .snapshots(),
           builder: (snapshot) {
-            return GridView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: snapshot.data!.docs.length,
-              itemBuilder: (BuildContext context, int index) {
-                return GridCard(
-                  imgUrl: snapshot.data!.docs[index]["imgUrl"].toString(),
-                  isAdded: false,
-                );
-              },
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, mainAxisSpacing: 12, crossAxisSpacing: 12),
-              shrinkWrap: true,
-            );
+       if(snapshot.data!.docs.length < 1 ){
+         return Center(child : Text("No Data Available"));
+       }
+       else{
+         return GridView.builder(
+           padding: const EdgeInsets.all(16),
+           itemCount: snapshot.data!.docs.length,
+           itemBuilder: (BuildContext context, int index) {
+             return GridCard(
+               imgUrl: snapshot.data!.docs[index]["imgUrl"].toString(),
+               isAdded: false,
+             );
+           },
+           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+               crossAxisCount: 2, mainAxisSpacing: 12, crossAxisSpacing: 12),
+           shrinkWrap: true,
+         );
+       }
           }),
     );
   }

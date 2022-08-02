@@ -21,8 +21,8 @@ class HomeScreen extends StatelessWidget {
     var docSnapshot = await collection.doc(SessionFiles.email).get();
     if (docSnapshot.exists) {
       Map<String, dynamic>? data = docSnapshot.data();
-      list.addAll(data?["data"]['cart']);
-      data?["data"]["imgUrl"];
+      list.addAll(data?['cart']);
+      data?["imgUrl"];
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           backgroundColor: ColorsUtils.red, content: Text(StringFiles.noUser)));

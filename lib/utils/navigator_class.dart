@@ -34,7 +34,7 @@ class NavigatorClass {
                 : const HomeScreenBottomNavigation()));
   }
 
-  static productDescription(BuildContext context, Map data) {
+  static productDescription(BuildContext context,  data) {
     Navigator.push(
         context,
         MaterialPageRoute(

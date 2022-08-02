@@ -20,6 +20,7 @@ class StringFiles {
   static const String enterYourEmail = "Enter Your Email ";
   static const String enterYourPassword = "Enter Your Password ";
   static const String firstName = "First Name ";
+  static const String email = "email ";
   static const String lastName = "Last Name ";
   static const String reEnterYourPassword = "Enter Your Password ";
   static const String forgetYourPassword = "Forget Your Password?";

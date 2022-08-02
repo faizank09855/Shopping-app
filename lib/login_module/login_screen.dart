@@ -195,6 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
       var password = data?["data"]['password'];
       if (pass == password) {
         prefs.setBool(SessionFiles.isLoggedIn, true);
+        prefs.setString(StringFiles.email, email);
       NavigatorClass.homeScreenReplace(context, true);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(

@@ -39,13 +39,13 @@ class HomeScreenDrawer extends StatelessWidget {
                   decoration: const BoxDecoration(),
                   child: Row(
                     children: [
-                      Image.network(snapshot.data!["data"]["imgUrl"]),
+                      Image.network(snapshot.data!["imgUrl"]),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            CustomText(snapshot.data!["data"]["name"],
+                            CustomText(snapshot.data!["name"],
                                 FontWeight.w700, 22,
                                 color: ColorsUtils.textBlack),
                           ],

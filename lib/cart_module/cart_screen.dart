@@ -26,9 +26,9 @@ class _CartScreenState extends State<CartScreen> {
     document = await collection.doc("fk09855@gmail.com").get();
     if (document.exists) {
       var data = document.data();
-      if (data["data"]["cart"].isNotEmpty) {
+      if (data["cart"].isNotEmpty) {
         setState(() {
-          dataList.addAll(data["data"]["cart"]);
+          dataList.addAll(data["cart"]);
         });
       }
     }
