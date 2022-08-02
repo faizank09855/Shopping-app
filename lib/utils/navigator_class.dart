@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:transparent/admin_panel/admin_add_item_screen.dart';
 import 'package:transparent/admin_panel/admin_panel_screen.dart';
 import 'package:transparent/admin_panel/bloc/admin_bloc.dart';
+import 'package:transparent/category_module/category_screen.dart';
 import 'package:transparent/home_module/bottom_nav_bar.dart';
 import 'package:transparent/home_module/product_description_screen.dart';
 import 'package:transparent/login_module/bloc/login_bloc.dart';
@@ -38,6 +39,13 @@ class NavigatorClass {
         context,
         MaterialPageRoute(
             builder: (context) => ProductDescription(product: data)));
+  }
+
+  static categoryScreen(BuildContext context, String title) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => CategoryScreen(title: title)));
   }
 
   static adminPanelScreen(BuildContext context) {

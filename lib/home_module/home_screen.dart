@@ -63,8 +63,7 @@ class HomeScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   itemBuilder: (BuildContext context, int index) {
                     return CircleAvatarListTile(
-
-                        data: snapshot.data!.docs[index]["data"]);
+                        data: snapshot.data!.docs[index]);
                   },
                 );
               },

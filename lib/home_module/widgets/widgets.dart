@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent/utils/colors_file.dart';
 import 'package:transparent/utils/colors_file.dart';
+import 'package:transparent/utils/navigator_class.dart';
 import 'package:transparent/utils/string_files.dart';
 import 'package:transparent/utils/text_style.dart';
 
@@ -20,9 +21,14 @@ class CircleAvatarListTile extends StatelessWidget {
       padding: const EdgeInsets.all(5.0),
       child: Column(
         children: [
-          CircleAvatar(
-            radius: 32,
-            backgroundImage: NetworkImage(data["imgUrl"].toString()),
+          InkWell(
+            onTap: (){
+              NavigatorClass.categoryScreen(context, data["name"]);
+            },
+            child: CircleAvatar(
+              radius: 32,
+              backgroundImage: NetworkImage(data["imgUrl"].toString()),
+            ),
           ),
           const SizedBox(
             height: 4,

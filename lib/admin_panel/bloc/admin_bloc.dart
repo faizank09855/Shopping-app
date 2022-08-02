@@ -14,7 +14,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
       try {
         AdminPanelRepository repository = AdminPanelRepositoryImpl();
         var data = await repository.addItemRepository(
-            "", event.image, event.name, event.price);
+            "", event.image, event.name, event.price , event.category);
         emit(AdminLoadedState());
       } catch (exception) {
         emit(AdminErrorState(error: exception.toString()));

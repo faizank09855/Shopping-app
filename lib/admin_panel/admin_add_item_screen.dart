@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:transparent/admin_panel/bloc/admin_bloc.dart';
+import 'package:transparent/home_module/widgets/custom_listview_builder.dart';
 import 'package:transparent/login_module/widget/widgets.dart';
 import 'package:transparent/payment_module/payment_widgets.dart';
 import 'package:transparent/utils/colors_file.dart';
@@ -18,7 +20,10 @@ class _AdminAddItemScreenState extends State<AdminAddItemScreen> {
   TextEditingController priceController = TextEditingController();
 
   TextEditingController imageController = TextEditingController();
+  TextEditingController categoryController = TextEditingController();
   AdminBloc? bloc;
+  String categoryText = '';
+  List<PopupMenuItem> list = [];
 
   @override
   void initState() {
@@ -73,6 +78,34 @@ class _AdminAddItemScreenState extends State<AdminAddItemScreen> {
                   const SizedBox(
                     height: 8,
                   ),
+                  Divider(),
+                  CustomStream(
+                      stream: FirebaseFirestore.instance
+                          .collection("category")
+                          .snapshots(),
+                      builder: (snapshot) {
+                        list.clear();
+                        snapshot.data.docs.forEach((el) {
+                          list.add(
+                            PopupMenuItem(
+                                onTap: () => _onTap(el["name"]),
+                                padding: const EdgeInsets.all(16),
+                                child: Text(el["name"])),
+                          );
+                        });
+
+                        return ListTile(
+                          title: const Text("category"),
+                          subtitle: Text(categoryText),
+                          trailing: PopupMenuButton(
+                              child:
+                                  const Icon(Icons.keyboard_arrow_down_sharp),
+                              itemBuilder: (context) => list),
+                        );
+                      }),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   GradientButton(
                       radius: 32,
                       gradientColors: const [
@@ -84,7 +117,8 @@ class _AdminAddItemScreenState extends State<AdminAddItemScreen> {
                         bloc!.add(AdminAddItemEvent(
                             name: nameController.text,
                             price: priceController.text,
-                            image: imageController.text));
+                            image: imageController.text,
+                            category: categoryText));
                       })
                 ],
               ),
@@ -93,5 +127,11 @@ class _AdminAddItemScreenState extends State<AdminAddItemScreen> {
         },
       ),
     );
+  }
+
+  _onTap(val) {
+    setState(() {
+      categoryText = val;
+    });
   }
 }
