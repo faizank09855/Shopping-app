@@ -110,7 +110,7 @@ class HomeScreen extends StatelessWidget {
         SizedBox(
           height: 210,
           child: CustomStream(
-            stream: _fireStore.collection("products").snapshots(),
+            stream: _fireStore.collection("products").limit(8).orderBy("price",descending: false).snapshots(),
             builder: (AsyncSnapshot snapshot) => CustomListViewBuilder(
               data: snapshot.data!.docs,
               favoriteList: list,

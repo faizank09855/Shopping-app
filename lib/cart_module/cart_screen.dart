@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:transparent/home_module/widgets/custom_listview_builder.dart';
 import 'package:transparent/utils/colors_file.dart';
 import 'package:transparent/utils/decoration.dart';
 import 'package:transparent/utils/string_files.dart';
 import 'package:transparent/utils/text_style.dart';
 import 'package:transparent/widgets/decorations.dart';
+import 'package:transparent/widgets/loading_builder.dart';
 
 class CartScreen extends StatefulWidget {
   CartScreen({Key? key}) : super(key: key);
@@ -32,20 +34,6 @@ class _CartScreenState extends State<CartScreen> {
         });
       }
     }
-
-    productCollections = FirebaseFirestore.instance.collection("products");
-    productDocument = await productCollections.doc("6").get();
-    if (productDocument.exists) {
-      var data2 = productDocument.data();
-      if (data2["data"] != null) {
-        data2["data"].forEach((ele) {
-          if (dataList.contains(ele["id"])) {
-            mainList.add(ele);
-          }
-          setState(() {});
-        });
-      }
-    }
   }
 
   @override
@@ -56,7 +44,29 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: _appBar(), body: _body(mainList));
+    return Scaffold(appBar: _appBar(), body: _body());
+  }
+
+  _body() {
+    return CustomStream(
+        loadingBuilder: LoadingBuilder().commonCircularLoading(),
+        stream: FirebaseFirestore.instance
+            .collection("products")
+            .where("id", whereIn: dataList)
+            .snapshots(),
+        builder: (snapshot) {
+          return ListView.builder(
+            physics: const BouncingScrollPhysics(),
+            itemCount: snapshot.data.docs.length,
+            shrinkWrap: true,
+            itemBuilder: (BuildContext context, int index) {
+              return CartTile(
+                isVisible: true,
+                data: snapshot.data.docs[index],
+              );
+            },
+          );
+        });
   }
 }
 
@@ -70,27 +80,13 @@ _appBar() {
   );
 }
 
-_body(mainList) {
-  return ListView.builder(
-    physics: const BouncingScrollPhysics(),
-    itemCount: mainList.length,
-    shrinkWrap: true,
-    itemBuilder: (BuildContext context, int index) {
-      return CartTile(
-        isVisible: true,
-        data: mainList[index],
-      );
-    },
-  );
-}
-
 class CartTile extends StatelessWidget {
   CartTile({Key? key, required this.isVisible, required this.data})
       : super(key: key);
 
   ValueNotifier<int> quantity = ValueNotifier<int>(1);
   final bool isVisible;
-  final Map data;
+  final QueryDocumentSnapshot data;
 
   @override
   Widget build(BuildContext context) {
