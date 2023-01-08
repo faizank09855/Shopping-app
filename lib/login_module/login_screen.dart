@@ -10,7 +10,6 @@ import 'package:transparent/utils/navigator_class.dart';
 import 'package:transparent/utils/session_file.dart';
 import 'package:transparent/utils/string_files.dart';
 import 'package:transparent/utils/text_style.dart';
-
 import '../payment_module/payment_widgets.dart';
 import 'bloc/login_bloc.dart';
 import 'widget/widgets.dart';
@@ -270,15 +269,12 @@ class thirdLayer extends CustomClipper<Path> {
     Path path = Path();
     path.lineTo(0, 0);
     path.lineTo(0, size.height - 42);
-
     var start = Offset(size.width * 0.17, size.height);
     var end = Offset(size.width * 0.35, size.height - 42);
     path.quadraticBezierTo(start.dx, start.dy, end.dx, end.dy);
-
     var start2 = Offset(size.width * 0.6, size.height - 94);
     var end2 = Offset(size.width, size.height - 36);
     path.quadraticBezierTo(start2.dx, start2.dy, end2.dx, end2.dy);
-
     path.lineTo(size.width, size.height);
     path.lineTo(size.width, 0);
 
