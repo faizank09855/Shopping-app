@@ -205,7 +205,8 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       }
     } else {
-      Scaffold.of(context).showSnackBar(
+
+      ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           backgroundColor: ColorsUtils.red,
           content: Text(StringFiles.noUser),

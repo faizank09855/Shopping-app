@@ -29,8 +29,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       if (docSnapshot.exists) {
         Map<String, dynamic>? data = docSnapshot.data();
-        var password = data?['password'];
+
+        var password = data?['data']['password'];
+
+        print(pass == password);
         if (pass == password) {
+
           prefs.setBool(SessionFiles.isLoggedIn, true);
           prefs.setString(StringFiles.email, email);
           NavigatorClass.homeScreenReplace(event.context, true);
@@ -43,7 +47,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           );
         }
       } else {
-        Scaffold.of(event.context).showSnackBar(
+        ScaffoldMessenger.of(event.context).showSnackBar(
           const SnackBar(
             backgroundColor: ColorsUtils.red,
             content: Text(StringFiles.noUser),

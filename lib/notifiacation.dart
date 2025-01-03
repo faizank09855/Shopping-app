@@ -65,18 +65,19 @@ class PushNotificationService {
             AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
     var androidSettings = const AndroidInitializationSettings('@mipmap/ic_launcher');
-    var iOSSettings = const IOSInitializationSettings(
-      requestSoundPermission: true,
-      requestBadgePermission: false,
-      requestAlertPermission: false,
-    );
+    // var iOSSettings = const IOSInitializationSettings(
+    //   requestSoundPermission: true,
+    //   requestBadgePermission: false,
+    //   requestAlertPermission: false,
+    // );
     var initSetttings =
-        InitializationSettings(android: androidSettings, iOS: iOSSettings);
+        InitializationSettings(android: androidSettings,);
     flutterLocalNotificationsPlugin.initialize(initSetttings,
-        onSelectNotification: (message) async {
-      // This function handles the click in the notification when the app is in foreground
-      // Get.toNamed(NOTIFICATIOINS_ROUTE);
-    });
+    //     onSelectNotification: (message) async {
+    //   // This function handles the click in the notification when the app is in foreground
+    //   // Get.toNamed(NOTIFICATIOINS_ROUTE);
+    // }
+    );
 // onMessage is called when the app is in foreground and a notification is received
     FirebaseMessaging.onMessage.listen((RemoteMessage? message) {
       // Get.find<HomeController>().getNotificationsNumber();

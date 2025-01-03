@@ -25,7 +25,7 @@ class ProductDescription extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         width: double.infinity,
-        child: FlatButton(
+        child: ElevatedButton(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
@@ -40,7 +40,7 @@ class ProductDescription extends StatelessWidget {
             ],
           ),
           onPressed: () {},
-          color: Colors.transparent,
+          // color: Colors.transparent,
         ),
       ),
     );

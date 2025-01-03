@@ -42,7 +42,8 @@ class GradientButton extends StatelessWidget {
               onTap();
             },
             style: TextButton.styleFrom(
-                primary: Colors.transparent, elevation: 0)));
+              backgroundColor: Colors.transparent,
+               elevation: 0)));
   }
 }
 
