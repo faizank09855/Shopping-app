@@ -18,17 +18,17 @@ class _LoginTextFieldState extends State<LoginTextField> {
       margin: const EdgeInsets.only(top: 16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(32),
+        borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-              color: Colors.grey.shade100,
-              spreadRadius: 7,
-              blurRadius: 7,
+              color: Colors.grey.shade50,
+              spreadRadius: 6,
+              blurRadius: 6,
               offset: const Offset(2, 2)),
           BoxShadow(
-              color: Colors.grey.shade200,
-              spreadRadius: 7,
-              blurRadius: 7,
+              color: Colors.grey.shade100,
+              spreadRadius: 6,
+              blurRadius: 6,
               offset: const Offset(-2, -2)),
         ],
       ),

@@ -52,7 +52,7 @@ class RoundContainerButton extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: Colors.red,
+                    color: Colors.pink.shade300,
                     width: 1,
                   ),
                   borderRadius: BorderRadius.circular(12),
@@ -63,7 +63,7 @@ class RoundContainerButton extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
                 decoration: BoxDecoration(
-                  color: Colors.red,
+                  color: Colors.pink.shade300,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Center(child: child)));

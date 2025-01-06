@@ -32,7 +32,7 @@ class _HomeScreenBottomNavigationState
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: index,
-        selectedItemColor: Colors.orangeAccent,
+        selectedItemColor: Colors.pink.shade300,
         unselectedItemColor: Colors.black87,
         type: BottomNavigationBarType.fixed,
         onTap: _onTap,

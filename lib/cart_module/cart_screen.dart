@@ -170,7 +170,7 @@ class CartTile extends StatelessWidget {
         onTap: () {},
         child: Container(
           padding: const EdgeInsets.all(12),
-          color: ColorsUtils.red,
+          color: Colors.red.shade400,
           child: const Icon(
             Icons.delete,
             color: Colors.white,

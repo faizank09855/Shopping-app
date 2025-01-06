@@ -210,9 +210,9 @@ class _CartIconButtonState extends State<CartIconButton> {
       },
       child: Center(
         child: isAdded
-            ? const Icon(
+            ?  Icon(
                 Icons.shopping_cart,
-                color: ColorsUtils.orangeAccent,
+                color: Colors.pink.shade300,
               )
             : Icon(
                 Icons.shopping_cart_outlined,
