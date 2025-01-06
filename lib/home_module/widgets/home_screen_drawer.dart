@@ -26,26 +26,26 @@ class HomeScreenDrawer extends StatelessWidget {
           FutureBuilder(
             future: FirebaseFirestore.instance
                 .collection('users')
-                .doc("fk09855@gmail.com")
+                .doc("fking@gmail.com")
                 .get(),
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else {
                 return DrawerHeader(
                   margin: const EdgeInsets.all(0),
                   duration: const Duration(milliseconds: 500),
                   curve: Curves.easeIn,
                   decoration: const BoxDecoration(),
-                  child: Row(
+                  child: Column(
                     children: [
-                      Image.network(snapshot.data!["imgUrl"]),
+                      Image.network(snapshot.data!['data']["imgUrl"] , height: 80,width: 80,fit: BoxFit.cover,),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            CustomText(snapshot.data!["name"],
+                            CustomText(snapshot.data!['data']["name"],
                                 FontWeight.w700, 22,
                                 color: ColorsUtils.textBlack),
                           ],
