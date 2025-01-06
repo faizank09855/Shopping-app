@@ -34,7 +34,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
         print(pass == password);
         if (pass == password) {
-
           prefs.setBool(SessionFiles.isLoggedIn, true);
           prefs.setString(StringFiles.email, email);
           NavigatorClass.homeScreenReplace(event.context, true);
