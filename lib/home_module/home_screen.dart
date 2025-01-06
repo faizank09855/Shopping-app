@@ -73,11 +73,11 @@ class HomeScreen extends StatelessWidget {
           ContainerLinear(
             child: Row(
               children: [
-                Expanded(
+                const Expanded(
                   flex: 3,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       CustomText("Sale", FontWeight.bold, 42,
                           color: Colors.white),
                       CustomText("Up to 40% off", FontWeight.w700, 14,

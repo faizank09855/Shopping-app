@@ -13,8 +13,30 @@ import 'package:transparent/utils/text_style.dart';
 
 import 'widgets.dart';
 
-class HomeScreenDrawer extends StatelessWidget {
+class HomeScreenDrawer extends StatefulWidget {
   const HomeScreenDrawer({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreenDrawer> createState() => _HomeScreenDrawerState();
+}
+
+class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
+  DocumentSnapshot<Map<String, dynamic>>? data;
+  ValueNotifier<bool> isLoading = ValueNotifier(true);
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  getData() async {
+    data = await FirebaseFirestore.instance
+        .collection('users')
+        .doc("fking@gmail.com")
+        .get();
+    isLoading.value = false ;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,39 +45,34 @@ class HomeScreenDrawer extends StatelessWidget {
       elevation: 3,
       child: Column(
         children: [
-          FutureBuilder(
-            future: FirebaseFirestore.instance
-                .collection('users')
-                .doc("fking@gmail.com")
-                .get(),
-            builder: (context, AsyncSnapshot snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else {
-                return DrawerHeader(
-                  margin: const EdgeInsets.all(0),
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.easeIn,
-                  decoration: const BoxDecoration(),
-                  child: Column(
-                    children: [
-                      Image.network(snapshot.data!['data']["imgUrl"] , height: 80,width: 80,fit: BoxFit.cover,),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CustomText(snapshot.data!['data']["name"],
-                                FontWeight.w700, 22,
-                                color: ColorsUtils.textBlack),
-                          ],
-                        ),
-                      )
-                    ],
+          DrawerHeader(
+            margin: const EdgeInsets.all(0),
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeIn,
+            decoration: const BoxDecoration(),
+            child: ValueListenableBuilder(valueListenable: isLoading, builder: (context, bool value, child) {
+              return  value ? CircularProgressIndicator() : Column(
+                children: [
+                  Image.network(
+                    data!['data']["imgUrl"],
+                    height: 80,
+                    width: 80,
+                    fit: BoxFit.cover,
                   ),
-                );
-              }
-            },
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CustomText(
+                            data!['data']["name"], FontWeight.w700, 22,
+                            color: ColorsUtils.textBlack),
+                      ],
+                    ),
+                  )
+                ],
+              );
+            },) ,
           ),
           CommonListTile(
             icon: Icons.account_circle_outlined,
